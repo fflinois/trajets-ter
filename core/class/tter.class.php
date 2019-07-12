@@ -112,7 +112,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepart'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureDepart']->setLogicalId('heureDepart'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(3+$indexTrajet*4);
+				//$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(3+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setName(__('Heure départ train '.$indexTrajet, __FILE__));
 			}
 			$arrayTrajets[$indexTrajet]['heureDepart']->setType('info');
@@ -126,7 +126,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureArrivee'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setLogicalId('heureArrivee'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(4);
+				//$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(4);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setName(__('Heure arrivée train '.$indexTrajet, __FILE__));
 			}
 			$arrayTrajets[$indexTrajet]['heureArrivee']->setType('info');
@@ -140,7 +140,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['dureeTrajet'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setLogicalId('dureeTrajet'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(5);
+				//$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(5);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setName(__('Temps de trajet train '.$indexTrajet, __FILE__));
 			}
 			$arrayTrajets[$indexTrajet]['dureeTrajet']->setType('info');
@@ -154,7 +154,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['retard'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['retard']->setLogicalId('retard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['retard']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['retard']->setOrder(5);
+				//$arrayTrajets[$indexTrajet]['retard']->setOrder(5);
 				$arrayTrajets[$indexTrajet]['retard']->setName(__('Retard train '.$indexTrajet, __FILE__));
 			}
 			$arrayTrajets[$indexTrajet]['retard']->setType('info');
@@ -170,7 +170,7 @@ class tter extends eqLogic {
 		if (!is_object($refreshA)) {
             $refreshA = new tterCmd();
             $refreshA->setLogicalId('refresha');
-            $refreshA->setOrder(13);
+            //$refreshA->setOrder(13);
             $refreshA->setName(__('Màj Aller', __FILE__));
 		}
 		$refreshA->setType('action');
@@ -182,7 +182,7 @@ class tter extends eqLogic {
 		if (!is_object($refreshR)) {
             $refreshR = new tterCmd();
             $refreshR->setLogicalId('refreshr');
-            $refreshR->setOrder(14);
+            //$refreshR->setOrder(14);
             $refreshR->setName(__('Màj Retour', __FILE__));
 		}
 		$refreshR->setType('action');
@@ -194,7 +194,7 @@ class tter extends eqLogic {
 		if (!is_object($notify)) {
             $notify = new tterCmd();
             $notify->setLogicalId('notify');
-            $notify->setOrder(15);
+            //$notify->setOrder(15);
             $notify->setName(__('Notifier', __FILE__));
 		}
 		$notify->setType('action');
