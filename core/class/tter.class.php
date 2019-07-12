@@ -65,7 +65,142 @@ class tter extends eqLogic {
     }
 
     public function postSave() {
-        
+		// Création des différentes commandes de type 'info'
+		// Création de la commande depart
+        $depart = $this->getCmd(null, 'depart');
+		if (!is_object($depart)) {
+			$depart = new tterCmd();
+			$depart->setLogicalId('depart');
+			$depart->setIsVisible(1);
+      		$depart->setOrder(1);
+			$depart->setName(__('Gare de départ', __FILE__));
+		}
+		$depart->setType('info');
+        $depart->setSubType('string');
+		$depart->setEventOnly(1);
+		$depart->setEqLogic_id($this->getId());
+		$depart->save();
+
+		// Création de la commande arrivee
+		$arrivee = $this->getCmd(null, 'arrivee');
+		if (!is_object($arrivee)) {
+			$arrivee = new tterCmd();
+			$arrivee->setLogicalId('arrivee');
+			$arrivee->setIsVisible(1);
+      		$arrivee->setOrder(2);
+		    $arrivee->setName(__('Gare d\'arrivée', __FILE__));
+		}
+		$arrivee->setType('info');
+		$arrivee->setSubType('string');
+		$arrivee->setEventOnly(1);
+		$arrivee->setEqLogic_id($this->getId());
+		$arrivee->save();
+
+		// Création des commandes en tableau d'objets
+		$arrayTrajets = [];
+
+		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet){
+
+			$arrayTrajets[$indexTrajet] = array(				
+			  	'heureDepart' => $this->getCmd(null, 'heureDepart'.$indexTrajet),
+			  	'heureArrivee' => $this->getCmd(null, 'heureArrivee'.$indexTrajet),
+			  	'dureeTrajet' => $this->getCmd(null, 'dureeTrajet'.$indexTrajet),
+			  	'retard' => $this->getCmd(null, 'retard'.$indexTrajet)
+			);
+			// Création de la commande heureDepart
+			if (!is_object($arrayTrajets[$indexTrajet]['heureDepart'])) {
+				$arrayTrajets[$indexTrajet]['heureDepart'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['heureDepart']->setLogicalId('heureDepart'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(5);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setName(__('Heure départ train '.$indexTrajet, __FILE__));
+			}
+			$arrayTrajets[$indexTrajet]['heureDepart']->setType('info');
+			$arrayTrajets[$indexTrajet]['heureDepart']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['heureDepart']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['heureDepart']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['heureDepart']->save();
+
+			// Création de la commande heureArrivee
+			if (!is_object($arrayTrajets[$indexTrajet]['heureArrivee'])) {
+				$arrayTrajets[$indexTrajet]['heureArrivee'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setLogicalId('heureArrivee'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(5);
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setName(__('Heure arrivée train '.$indexTrajet, __FILE__));
+			}
+			$arrayTrajets[$indexTrajet]['heureArrivee']->setType('info');
+			$arrayTrajets[$indexTrajet]['heureArrivee']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['heureArrivee']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['heureArrivee']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['heureArrivee']->save();
+
+			// Création de la commande dureeTrajet
+			if (!is_object($arrayTrajets[$indexTrajet]['dureeTrajet'])) {
+				$arrayTrajets[$indexTrajet]['dureeTrajet'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setLogicalId('dureeTrajet'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(5);
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setName(__('Temps de trajet train '.$indexTrajet, __FILE__));
+			}
+			$arrayTrajets[$indexTrajet]['dureeTrajet']->setType('info');
+			$arrayTrajets[$indexTrajet]['dureeTrajet']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['dureeTrajet']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['dureeTrajet']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['dureeTrajet']->save();
+		
+			// Création de la commande retard
+			if (!is_object($arrayTrajets[$indexTrajet]['retard'])) {
+				$arrayTrajets[$indexTrajet]['retard'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['retard']->setLogicalId('retard'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['retard']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['retard']->setOrder(5);
+				$arrayTrajets[$indexTrajet]['retard']->setName(__('Retard train '.$indexTrajet, __FILE__));
+			}
+			$arrayTrajets[$indexTrajet]['retard']->setType('info');
+			$arrayTrajets[$indexTrajet]['retard']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['retard']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['retard']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['retard']->save();
+		}
+		
+		// Création des commandes de type action
+		
+		$refreshA = $this->getCmd(null, 'refresha');
+		if (!is_object($refreshA)) {
+            $refreshA = new tterCmd();
+            $refreshA->setLogicalId('refresha');
+            $refreshA->setOrder(13);
+            $refreshA->setName(__('Màj Aller', __FILE__));
+		}
+		$refreshA->setType('action');
+		$refreshA->setSubType('other');
+		$refreshA->setEqLogic_id($this->getId());
+		$refreshA->save();
+
+    	$refreshR = $this->getCmd(null, 'refreshr');
+		if (!is_object($refreshR)) {
+            $refreshR = new tterCmd();
+            $refreshR->setLogicalId('refreshr');
+            $refreshR->setOrder(14);
+            $refreshR->setName(__('Màj Retour', __FILE__));
+		}
+		$refreshR->setType('action');
+		$refreshR->setSubType('other');
+		$refreshR->setEqLogic_id($this->getId());
+		$refreshR->save();
+
+		$notify = $this->getCmd(null, 'notify');
+		if (!is_object($notify)) {
+            $notify = new tterCmd();
+            $notify->setLogicalId('notify');
+            $notify->setOrder(15);
+            $notify->setName(__('Notifier', __FILE__));
+		}
+		$notify->setType('action');
+		$notify->setSubType('other');
+		$notify->setEqLogic_id($this->getId());
+		$notify->save();
     }
 
     public function preUpdate() {

@@ -1,58 +1,73 @@
 <?php
 
 class SncfApi {
-
-	public function retrieveJourneys($apiKey, $stopAreaFromId, $stopAreaToId) {
-		log::add('ter','debug','calling sncf api with :'.$apiKey.' / '.$stopAreaFromId.' / '.$stopAreaToId);
+  /**
+   * Fonction qui permet de récuperer les trajets entre deux gares
+   * 
+   * @param String $apiKey clé de l'api SNCF
+   * @param String $depart code de la gare de départ
+   * @param String $arrivee code de la gare d'arrivée
+   * 
+   * @return array tableau de trajets
+   */
+	public function getTrajets($apiKey, $depart, $arrivee) {
+		log::add('ter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
 		date_default_timezone_set("Europe/Paris");
     $currentDate = date("Ymd\TH:i");
-	 // $currentDate = "20170509T18:40";
-    // retrieve raw data from SNCF Api
-    $query = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?from='.$stopAreaFromId.'&to='.$stopAreaToId.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys=4';
+    
+    // construction de la requete vers l'API SNCF
+    $baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
+    $finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys=4';
     log::add('ter','debug',$query);
+
+    // Execution de la requete
     $response = file_get_contents($query);
 		log::add('ter','debug','API response :'.$response);
-		$json = json_decode($response, true);
+    
+    // Decodage de la response en JSON
+    $responseJSON = json_decode($response, true);
 
-    // go through each journey
-    $journeys = [];
-    $iTrain = 0;
-    foreach($json['journeys'] as $trains) {
-      $departureDate = $trains['departure_date_time'];
-      $departureTime = substr($departureDate,9,4);
-      $arrivalDate = $trains['arrival_date_time'];
-      $arrivalTime = substr($arrivalDate,9,4);
-      $duration = gmdate("Hi", strtotime($arrivalDate)-strtotime($departureDate));
-      $trainNumber = $trains['sections'][1]['display_informations']['headsign'];
-      $gareFrom = $trains['sections'][1]['from']['stop_point']['name'];
-      $gareTo = $trains['sections'][1]['to']['stop_point']['name'];
+    $trajets = [];
+    $indexTrajet = 0;
+    
+    // Pour chaque 'journeys' du JSON représentant un trajet
+    foreach($responseJSON['journeys'] as $trajet) {
 
-			log::add('ter','debug','Found train '.$trainNumber.' :'.$departureDate.' / '.$arrivalDate.' - '.$gareFrom.' > '.$gareTo);
+      // récuperation des informations principales du trajet
+      $dateTimeDepart = $trajet['departure_date_time'];
+      $heureDepart = substr($dateTimeDepart,9,4);
+      $dateTimeArrivee = $trajet['arrival_date_time'];
+      $heureArrivee = substr($dateTimeArrivee,9,4);
+      $dureeTrajet = gmdate("Hi", strtotime($dateTimeArrivee)-strtotime($dateTimeDepart));
+      $numeroTrain = $trajet['sections'][1]['display_informations']['headsign'];
+      $gareDepart = $trajet['sections'][1]['from']['stop_point']['name'];
+      $gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
 
-      // is train available ?
-      if ($trains['status'] == 'NO_SERVICE'){
-      	continue;
-      }
+			log::add('ter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 
-			// retrieve disruptions if any...
+      // si le train est indisponible 
+      if ($trajet['status'] == 'NO_SERVICE'){
+      	$retard = 'PAS DE SERVICE';
+      }else{
+        // sinon recherche des retards éventuels
         $retard = 'aucun';
-        $updatedTime = $departureTime;
-        $numdisrup = $trains['sections'][1]['display_informations']['links'][0]['id'];
+        $updatedTime = $heureDepart;
+        $numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
         log::add('ter','debug','Disruption ID '.$numdisrup);
 
-        $disruptions = $json['disruptions'];
+        $disruptions = $responseJSON['disruptions'];
         foreach($disruptions as $disruption) {
             if ( $disruption['disruption_id']== $numdisrup ) {
               log::add('ter','debug','Disruption ID '.$numdisrup. ' has been found!');
-              log::add('ter','debug','Search for impacted departure '.$departureTime);
+              log::add('ter','debug','Search for impacted departure '.$heureDepart);
               // go through each impacted stops
               foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
                 log::add('ter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
 
-                  if ( substr($impactStop['base_departure_time'],0,4) == $departureTime ) {
+                  if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {
                       $updatedTime = $impactStop['amended_departure_time'];
                       // compute delay
-                      $retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($departureTime,0,2) * 60 + substr($departureTime,2,2) ).' minutes';
+                      $retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) ).' minutes';
                       if ($retard == 0) {
                         $retard = 'aucun';
                       } elseif ($retard > 1) {
@@ -66,23 +81,24 @@ class SncfApi {
               break;
             }
         }
+      }		
 
 			// store data for current train
-    	$journeys[$iTrain] = array(
-				'trainNumber' => $trainNumber,
-			  'gareFrom' => $gareFrom,
-			  'gareTo' => $gareTo,
-			  'departureDate' => $departureDate,
-			  'departureTime' => $departureTime,
-			  'arrivalDate' => $arrivalDate,
-			  'arrivalTime' => $arrivalTime,
-			  'duration' => $duration,
+    	$trajets[$indexTrajet] = array(
+				'numeroTrain' => $numeroTrain,
+			  'gareDepart' => $gareDepart,
+			  'gareArrivee' => $gareArrivee,
+			  'dateTimeDepart' => $dateTimeDepart,
+			  'heureDepart' => $heureDepart,
+			  'dateTimeArrivee' => $dateTimeArrivee,
+			  'heureArrivee' => $heureArrivee,
+			  'dureeTrajet' => $dureeTrajet,
 			  'retard' => $retard,
-			  'updatedDepartureTime' => $updatedTime
+			  'updatedheureDepart' => $updatedTime
 			);
-    	$iTrain++;
+    	$indexTrajet++;
   	}
-		return $journeys;
+		return $trajets;
 	}
 }
 
