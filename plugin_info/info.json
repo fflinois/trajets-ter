@@ -1,0 +1,19 @@
+{
+	"id" : "tter",
+	"name" : "Trajets TER",
+	"description" : "Récupération et affichage des horaires de TER entre 2 gares données",
+	"licence" : "AGPL",
+	"author" : "fflinois",
+	"require" : "3.2",
+	"category" : "organization",
+	"hasDependency" : false,
+	"hasOwnDeamon" : false,
+	"maxDependancyInstallTime" : 0,
+	"changelog" : "",
+	"documentation" : "",
+	"link" : {
+		"forum":"Lien vers le forum"
+	},
+	"language" : ["fr_FR"],
+	"compatibility" : ["rpi"]
+}
