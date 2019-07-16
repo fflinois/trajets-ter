@@ -66,6 +66,22 @@ class tter extends eqLogic {
 
     public function postSave() {
 		log::add('tter','debug','Début ajout des commandes');
+
+		// Création des commandes de type action		
+		$refreshTter = $this->getCmd(null, 'refreshtter');
+		if (!is_object($refreshTter)) {
+            $refreshTter = new tterCmd();
+            $refreshTter->setLogicalId('refreshtter');
+			$refreshTter.setIsVisible(1);
+			$depart->setOrder(1);
+			$refreshTter->setName(__('Mise à jour', __FILE__));
+			log::add('tter','debug','Ajout commande : refreshtter');
+		}
+		$refreshTter->setType('action');
+		$refreshTter->setSubType('other');
+		$refreshTter->setEqLogic_id($this->getId());
+		$refreshTter->save();
+
 		// Création des différentes commandes de type 'info'
 		// Création de la commande depart
         $depart = $this->getCmd(null, 'depart');
@@ -73,7 +89,7 @@ class tter extends eqLogic {
 			$depart = new tterCmd();
 			$depart->setLogicalId('depart');
 			$depart->setIsVisible(1);
-      		$depart->setOrder(1);
+      		$depart->setOrder(2);
 			$depart->setName(__('Gare de départ', __FILE__));
 			log::add('tter','debug','Ajout commande : depart');
 		}
@@ -89,7 +105,7 @@ class tter extends eqLogic {
 			$arrivee = new tterCmd();
 			$arrivee->setLogicalId('arrivee');
 			$arrivee->setIsVisible(1);
-      		$arrivee->setOrder(2);
+      		$arrivee->setOrder(3);
 			$arrivee->setName(__('Gare d\'arrivée', __FILE__));
 			log::add('tter','debug','Ajout commande : arrivee');
 		}
@@ -115,7 +131,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepart'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureDepart']->setLogicalId('heureDepart'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(3+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(4+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setName(__('Heure départ train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureDepart'.$indexTrajet);
 			}
@@ -130,7 +146,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureArrivee'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setLogicalId('heureArrivee'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(4+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(5+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setName(__('Heure arrivée train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureArrivee'.$indexTrajet);
 			}
@@ -145,7 +161,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['dureeTrajet'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setLogicalId('dureeTrajet'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(5+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(6+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setName(__('Temps de trajet train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : dureeTrajet'.$indexTrajet);
 			}
@@ -160,7 +176,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['retard'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['retard']->setLogicalId('retard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['retard']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['retard']->setOrder(6+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['retard']->setOrder(7+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['retard']->setName(__('Retard train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : retard'.$indexTrajet);
 			}
@@ -170,20 +186,6 @@ class tter extends eqLogic {
 			$arrayTrajets[$indexTrajet]['retard']->setEqLogic_id($this->getId());
 			$arrayTrajets[$indexTrajet]['retard']->save();
 		}
-		
-		// Création des commandes de type action		
-		$refreshTter = $this->getCmd(null, 'refreshtter');
-		if (!is_object($refreshTter)) {
-            $refreshTter = new tterCmd();
-            $refreshTter->setLogicalId('refreshtter');
-			$refreshTter.setIsVisible(1);
-			$refreshTter->setName(__('Mise à jour', __FILE__));
-			log::add('tter','debug','Ajout commande : refreshtter');
-		}
-		$refreshTter->setType('action');
-		$refreshTter->setSubType('other');
-		$refreshTter->setEqLogic_id($this->getId());
-		$refreshTter->save();
 	
 		log::add('tter','debug','Fin ajout des commandes');
 
