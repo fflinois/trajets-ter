@@ -23,7 +23,9 @@ function tter_install() {
 }
 
 function tter_update() {
-    
+    foreach (eqLogic::byType('tter') as $tter) {
+        $tter->save();
+    }
 }
 
 

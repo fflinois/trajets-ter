@@ -195,7 +195,7 @@ class tter extends eqLogic {
     }
 
     public function postUpdate() {
-        
+        $this->postSave();
     }
 
     public function preRemove() {
@@ -213,7 +213,8 @@ class tter extends eqLogic {
 	public function refreshData($tter) {
 
 		log::add('tter','debug','Debut fonction refreshData');
-		$apiKey = config::byKey('apiKey', 'ter', 0);		
+		$apiKey = config::byKey('apiKey', 'tter', 0);
+		log::add('tter','debug',$apiKey);		
 		// appel de l'API SNCF
 		$api = new SncfApi();
 		log::add('tter','debug',$api);
