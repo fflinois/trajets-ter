@@ -332,9 +332,10 @@ class tter extends eqLogic {
 		$currentDate = strtotime(date("Ymd\TH:i"));
 		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
 			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['heureDepart']));
-			$heureArrivee = date('Hi',strtotime($journeys[$indexTrajet]['heureDepart']));
+			$heureArrivee = date('Hi',strtotime($trajets[$indexTrajet]['heureDepart']));
 			// update widget info
 			foreach ($tter->getCmd('info') as $cmd) {
+
 				switch ($cmd->getLogicalId()) {
 				  
 					case 'retard'+$indexTrajet:
@@ -346,7 +347,7 @@ class tter extends eqLogic {
 				    case 'heureArrivee'+$indexTrajet:
 						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
 						break;
-				  	case 'heureDepart':
+				  	case 'heureDepart'+$indexTrajet:
 						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
 						break;
 					case 'arrivee':
