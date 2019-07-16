@@ -216,8 +216,8 @@ class tter extends eqLogic {
 		$apiKey = config::byKey('apiKey', 'tter', 0);
 		log::add('tter','debug',$apiKey);		
 		// appel de l'API SNCF
-		$api = new SncfApi();
-		log::add('tter','debug',$api);
+		//$api = new SncfApi();
+		//log::add('tter','debug',$api);
 		$gareDepart = $tter->getConfiguration('gareDepart');
 		log::add('tter','debug',$gareDepart);
 		$gareArrivee = $tter->getConfiguration('gareArrivee');
