@@ -7,7 +7,7 @@ $plugin = plugin::byId('tter');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 
-include_file('desktop', 'ter', 'css', 'ter');
+include_file('desktop', 'tter', 'css', 'tter');
 
 ?>
 
