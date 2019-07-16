@@ -99,7 +99,7 @@ class tter extends eqLogic {
 		// Création des commandes en tableau d'objets
 		$arrayTrajets = [];
 
-		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet){
+		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
 
 			$arrayTrajets[$indexTrajet] = array(				
 			  	'heureDepart' => $this->getCmd(null, 'heureDepart'.$indexTrajet),
@@ -176,6 +176,9 @@ class tter extends eqLogic {
 		$refresh->setSubType('other');
 		$refresh->setEqLogic_id($this->getId());
 		$refresh->save();
+
+		$ter = $this->getEqLogic();
+		$ter->refreshData();
     }
 
     public function preUpdate() {
@@ -192,7 +195,56 @@ class tter extends eqLogic {
 
     public function postRemove() {
         
-    }
+	}
+	
+	/**
+	 * méthode appelée pour remplir les champs avec un appel à l'API
+	 * 
+	 */
+	public function refreshData() {
+		
+		$apiKey = config::byKey('apiKey', 'ter', 0);
+		$ter = $this->getEqLogic();
+		// appel de l'API SNCF
+		$api = new SncfApi();
+		$trajets = $api->retrieveJourneys($apiKey, $stopAreaFromId, $stopAreaToId);
+		log::add('tter','debug','Trajets '.serialize($trajets));
+	
+		// find the right train...
+		$currentDate = strtotime(date("Ymd\TH:i"));
+		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
+			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['departureDate']));
+			$heureArrivee = date('Hi',strtotime($journeys[$indexTrajet]['arrivalDate']));
+			// update widget info
+			foreach ($ter->getCmd('info') as $cmd) {
+				switch ($cmd->getLogicalId()) {
+				  
+					case 'retard'+$indexTrajet:
+						$value = $trajets[$indexTrajet]['retard'];
+						break;
+					case 'dureeTrajet'+$indexTrajet:
+						$value = substr($trajets[$indexTrajet]['duration'],0,2)."h".substr($trajets[$indexTrajet]['duration'],2,2);
+						break;
+				    case 'heureArrivee'+$indexTrajet:
+						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
+						break;
+				  	case 'heureDepart':
+						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
+						break;
+					case 'arrivee':
+          				$value = $trajets[$indexTrajet]['gareTo'];
+        				break;
+        			case 'depart':
+         				$value = $trajets[$indexTrajet]['gareFrom'];
+       					break;
+				}
+			$cmd->setCollectDate('');
+			$cmd->event($value);
+			log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
+			}
+		}
+		log::add('ter','debug','selected journey n° '.$i);	
+	}
 
     /*
      * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
@@ -233,7 +285,10 @@ class tterCmd extends cmd {
      */
 
     public function execute($_options = array()) {
-        
+		$ter = $this->getEqLogic();
+		if ($this->getLogicalId() == 'refresh') {
+				  $ter->refreshData();
+		}
     }
 
     /*     * **********************Getteur Setteur*************************** */

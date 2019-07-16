@@ -1,4 +1,4 @@
-# horaire-ter
+# trajets-ter
 Plugin permettant d'afficher les horaires des prochains TER pour un trajet entre deux gares.
 Ce plugin nécessite une clé d'authentification à l'API SNCF accessible à cette adresse :
 
