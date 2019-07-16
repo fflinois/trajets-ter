@@ -173,7 +173,7 @@ class tter extends eqLogic {
 		
 		// Création des commandes de type action		
 		$refreshTter = $this->getCmd(null, 'refreshTter');
-		if (!is_object($refresh)) {
+		if (!is_object($refreshTter)) {
             $refreshTter = new tterCmd();
             $refreshTter->setLogicalId('refreshTter');
 			$refreshTter.setIsVisible(1);
