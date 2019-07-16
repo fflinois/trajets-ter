@@ -230,9 +230,9 @@ class tter extends eqLogic {
 
 		// ##############################################################
 
-					log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
-				date_default_timezone_set("Europe/Paris");
-			$currentDate = date("Ymd\TH:i");
+		log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
+		date_default_timezone_set("Europe/Paris");
+		$currentDate = date("Ymd\TH:i");
 
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
@@ -262,7 +262,7 @@ class tter extends eqLogic {
 			$gareDepart = $trajet['sections'][1]['from']['stop_point']['name'];
 			$gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
 
-					log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
+			log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
@@ -303,20 +303,22 @@ class tter extends eqLogic {
 			}		
 
 					// store data for current train
-				$trajets[$indexTrajet] = array(
-						'numeroTrain' => $numeroTrain,
-					'gareDepart' => $gareDepart,
-					'gareArrivee' => $gareArrivee,
-					'dateTimeDepart' => $dateTimeDepart,
-					'heureDepart' => $heureDepart,
-					'dateTimeArrivee' => $dateTimeArrivee,
-					'heureArrivee' => $heureArrivee,
-					'dureeTrajet' => $dureeTrajet,
-					'retard' => $retard,
-					'updatedheureDepart' => $updatedTime
-					);
-				$indexTrajet++;
-			}
+			$trajets[$indexTrajet] = array(
+				'numeroTrain' => $numeroTrain,
+				'gareDepart' => $gareDepart,
+				'gareArrivee' => $gareArrivee,
+				'dateTimeDepart' => $dateTimeDepart,
+				'heureDepart' => $heureDepart,
+				'dateTimeArrivee' => $dateTimeArrivee,
+				'heureArrivee' => $heureArrivee,
+				'dureeTrajet' => $dureeTrajet,
+				'retard' => $retard,
+				'updatedheureDepart' => $updatedTime
+				);
+			log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
+
+			$indexTrajet++;
+		}
 
 
 		// ##############################################################
@@ -358,7 +360,6 @@ class tter extends eqLogic {
 			log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 			}
 		}
-		log::add('ter','debug','selected journey n° '.$i);	
 	}
 
 	  /**
