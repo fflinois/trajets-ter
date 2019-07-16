@@ -365,7 +365,7 @@ class tter extends eqLogic {
         				break;
 					case 'depart':
 						$cmd->setCollectDate('');
-						$cmd->event($trajets[$indexTrajet]['gareDepart']();
+						$cmd->event($trajets[$indexTrajet]['gareDepart'];
 						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
        					break;
 				}
