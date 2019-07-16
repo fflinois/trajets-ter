@@ -338,16 +338,16 @@ class tter extends eqLogic {
 
 				switch ($cmd->getLogicalId()) {
 				  
-					case 'retard'+$indexTrajet:
+					case 'retard'.$indexTrajet:
 						$value = $trajets[$indexTrajet]['retard'];
 						break;
-					case 'dureeTrajet'+$indexTrajet:
+					case 'dureeTrajet'.$indexTrajet:
 						$value = substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2);
 						break;
-				    case 'heureArrivee'+$indexTrajet:
+				    case 'heureArrivee'.$indexTrajet:
 						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
 						break;
-				  	case 'heureDepart'+$indexTrajet:
+				  	case 'heureDepart'.$indexTrajet:
 						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
 						break;
 					case 'arrivee':
