@@ -71,7 +71,7 @@ class tter extends eqLogic {
 		
 		$refreshR = $this->getCmd(null, 'refreshr');
 		if (!is_object($refreshR)) {
-            $refreshR = new terCmd();
+            $refreshR = new tterCmd();
             $refreshR->setLogicalId('refreshr');
             $refreshR->setOrder(14);
             $refreshR->setName(__('Màj Retour', __FILE__));
