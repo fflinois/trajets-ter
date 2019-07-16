@@ -65,6 +65,7 @@ class tter extends eqLogic {
     }
 
     public function postSave() {
+		log::add('tter','debug','Début ajout des commandes');
 		// Création des différentes commandes de type 'info'
 		// Création de la commande depart
         $depart = $this->getCmd(null, 'depart');
@@ -184,6 +185,8 @@ class tter extends eqLogic {
 		$refreshTter->setEqLogic_id($this->getId());
 		$refreshTter->save();
 	
+		log::add('tter','debug','Fin ajout des commandes');
+
     }
 
     public function preUpdate() {
