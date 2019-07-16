@@ -216,11 +216,12 @@ class tter extends eqLogic {
 		$apiKey = config::byKey('apiKey', 'ter', 0);		
 		// appel de l'API SNCF
 		$api = new SncfApi();
+		log::add('tter','debug',$api);
 		$gareDepart = $ter->getConfiguration('gareDepart');
 		log::add('tter','debug',$gareDepart);
 		$gareArrivee = $ter->getConfiguration('gareArrivee');
 		log::add('tter','debug',$gareArrivee);
-		$trajets = $api->retrieveJourneys($apiKey, $gareDepart, $gareArrivee);
+		$trajets = $api->getTrajets($apiKey, $gareDepart, $gareArrivee);
 		log::add('tter','debug','Trajets '.serialize($trajets));
 	
 		// find the right train...
