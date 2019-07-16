@@ -362,7 +362,6 @@ foreach($responseJSON['journeys'] as $trajet) {
   }
 	return $trajets;
 }
-}
 
     /*
      * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
