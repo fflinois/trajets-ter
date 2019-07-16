@@ -168,9 +168,9 @@ class tter extends eqLogic {
 		$refresh = $this->getCmd(null, 'refresh');
 		if (!is_object($refresh)) {
             $refresh = new tterCmd();
-            $refresh->setLogicalId('refresha');
+            $refresh->setLogicalId('refresh');
             $refresh->setOrder(19);
-            $refresh->setName(__('Màj Aller', __FILE__));
+            $refresh->setName(__('Mise à jour', __FILE__));
 		}
 		$refresh->setType('action');
 		$refresh->setSubType('other');
