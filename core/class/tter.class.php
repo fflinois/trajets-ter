@@ -172,13 +172,13 @@ class tter extends eqLogic {
 		}
 		
 		// Création des commandes de type action		
-		$refreshTter = $this->getCmd(null, 'refreshTter');
+		$refreshTter = $this->getCmd(null, 'refreshtter');
 		if (!is_object($refreshTter)) {
             $refreshTter = new tterCmd();
-            $refreshTter->setLogicalId('refreshTter');
+            $refreshTter->setLogicalId('refreshtter');
 			$refreshTter.setIsVisible(1);
 			$refreshTter->setName(__('Mise à jour', __FILE__));
-			log::add('tter','debug','Ajout commande : refreshTter');
+			log::add('tter','debug','Ajout commande : refreshtter');
 		}
 		$refreshTter->setType('action');
 		$refreshTter->setSubType('other');
@@ -299,7 +299,7 @@ class tterCmd extends cmd {
     public function execute($_options = array()) {
 		log::add('tter','debug','Lancement fonction execute');
 		$tter = $this->getEqLogic();
-		if ($this->getLogicalId() == 'refresh') {
+		if ($this->getLogicalId() == 'refreshtter') {
 			log::add('tter','debug','appel fonction refresh');
 			$tter->refreshData($tter);
 		}
