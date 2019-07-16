@@ -23,28 +23,16 @@ if (!isConnect()) {
 }
 ?>
 <form class="form-horizontal">
-    <fieldset>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Global param 1}}</label>
-            <div class="col-lg-2">
-                <input class="configKey form-control" data-l1key="param1" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Global param 2}}</label>
-            <div class="col-lg-2">
-                <input class="configKey form-control" data-l1key="param2" value="80" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Global param 2}}</label>
-            <div class="col-lg-2">
-                <select class="configKey form-control" data-l1key="param3">
-                    <option value="value1">value1</option>
-                    <option value="value2">value2</option>
-                </select>
-            </div>
-        </div>
+  <fieldset>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        {{Clé API}}
+      </label>
+      <div class="col-sm-9">
+        <input class="configKey form-control" data-l1key="apiKey" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+        <p class="help-block">Obtenez votre clé d'accès <a href="https://data.sncf.com/api" target="_blank">SNCF Open Data</a></p>
+      </div>
+    </div>
   </fieldset>
 </form>
 
