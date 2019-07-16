@@ -69,6 +69,7 @@ class tter extends eqLogic {
 
 		// Création des commandes de type action		
 		$refreshTter = $this->getCmd(null, 'refreshtter');
+		log::add('tter','debug','getcmd refresh '.$refreshTter);
 		if (!is_object($refreshTter)) {
             $refreshTter = new tterCmd();
             $refreshTter->setLogicalId('refreshtter');
