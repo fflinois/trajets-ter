@@ -71,11 +71,17 @@ class tter extends eqLogic {
 		$refreshTter = $this->getCmd(null, 'refreshtter');
 		log::add('tter','debug','getcmd refresh '.$refreshTter);
 		if (!is_object($refreshTter)) {
-            $refreshTter = new tterCmd();
-            $refreshTter->setLogicalId('refreshtter');
+			$refreshTter = new tterCmd();
+			log::add('tter','debug','création objet cmd refresh '.$refreshTter);
+			$refreshTter->setLogicalId('refreshtter');
+			log::add('tter','debug','création logical id refresh '.$refreshTter);
 			$refreshTter.setIsVisible(1);
+			log::add('tter','debug','création isvisible '.$refreshTter);
 			$depart->setOrder(1);
+			log::add('tter','debug','création order '.$refreshTter);
 			$refreshTter->setName(__('Mise à jour', __FILE__));
+			log::add('tter','debug','création name '.$refreshTter);
+
 			log::add('tter','debug','Ajout commande : refreshtter');
 		}
 		$refreshTter->setType('action');
