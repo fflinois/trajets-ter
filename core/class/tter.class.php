@@ -224,6 +224,7 @@ class tter extends eqLogic {
 		log::add('tter','debug',$gareArrivee);
 
 		$api = $this->getEqLogic();
+		log::add('tter','debug',$api);
 		$trajets = $api->getTrajets($apiKey, $gareDepart, $gareArrivee);
 		log::add('tter','debug','Trajets '.serialize($trajets));
 	
