@@ -237,10 +237,10 @@ class tter extends eqLogic {
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
 			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys=4';
-			log::add('tter','debug',$query);
+			log::add('tter','debug',$finalQuery);
 
 			// Execution de la requete
-			$response = file_get_contents($query);
+			$response = file_get_contents($finalQuery);
 				log::add('tter','debug','API response :'.$response);
 
 			// Decodage de la response en JSON
