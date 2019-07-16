@@ -241,10 +241,11 @@ class tter extends eqLogic {
 
 			// Execution de la requete
 			$response = file_get_contents($finalQuery);
-				log::add('tter','debug','API response :'.$response);
+			log::add('tter','debug','API response :'.$response);
 
 			// Decodage de la response en JSON
 			$responseJSON = json_decode($response, true);
+			log::add('tter','debug','API response json :'.$responseJSON);
 
 			$trajets = [];
 			$indexTrajet = 0;
@@ -330,8 +331,8 @@ class tter extends eqLogic {
 		// find the right train...
 		$currentDate = strtotime(date("Ymd\TH:i"));
 		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
-			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['departureDate']));
-			$heureArrivee = date('Hi',strtotime($journeys[$indexTrajet]['arrivalDate']));
+			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['heureDepart']));
+			$heureArrivee = date('Hi',strtotime($journeys[$indexTrajet]['heureDepart']));
 			// update widget info
 			foreach ($tter->getCmd('info') as $cmd) {
 				switch ($cmd->getLogicalId()) {
@@ -340,7 +341,7 @@ class tter extends eqLogic {
 						$value = $trajets[$indexTrajet]['retard'];
 						break;
 					case 'dureeTrajet'+$indexTrajet:
-						$value = substr($trajets[$indexTrajet]['duration'],0,2)."h".substr($trajets[$indexTrajet]['duration'],2,2);
+						$value = substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2);
 						break;
 				    case 'heureArrivee'+$indexTrajet:
 						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
@@ -349,10 +350,10 @@ class tter extends eqLogic {
 						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
 						break;
 					case 'arrivee':
-          				$value = $trajets[$indexTrajet]['gareTo'];
+          				$value = $trajets[$indexTrajet]['gareArrivee'];
         				break;
         			case 'depart':
-         				$value = $trajets[$indexTrajet]['gareFrom'];
+         				$value = $trajets[$indexTrajet]['gareDepart'];
        					break;
 				}
 			$cmd->setCollectDate('');
