@@ -339,27 +339,37 @@ class tter extends eqLogic {
 				switch ($cmd->getLogicalId()) {
 				  
 					case 'retard'.$indexTrajet:
-						$value = $trajets[$indexTrajet]['retard'];
+						$cmd->setCollectDate('');
+						$cmd->event($trajets[$indexTrajet]['retard']);
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
 					case 'dureeTrajet'.$indexTrajet:
-						$value = substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2);
+						$cmd->setCollectDate('');
+						$cmd->event(substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2));
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
-				    case 'heureArrivee'.$indexTrajet:
-						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
+					case 'heureArrivee'.$indexTrajet:
+						$cmd->setCollectDate('');
+						$cmd->event(substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2));
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
-				  	case 'heureDepart'.$indexTrajet:
-						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
+					case 'heureDepart'.$indexTrajet:
+					  	$cmd->setCollectDate('');
+						$cmd->event(substr($heureDepart,0,2)."h".substr($heureDepart,2,2));
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
 					case 'arrivee':
-          				$value = $trajets[$indexTrajet]['gareArrivee'];
+						$cmd->setCollectDate('');
+						$cmd->event($trajets[$indexTrajet]['gareArrivee']);
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
         				break;
-        			case 'depart':
-         				$value = $trajets[$indexTrajet]['gareDepart'];
+					case 'depart':
+						$cmd->setCollectDate('');
+						$cmd->event($trajets[$indexTrajet]['gareDepart']();
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
        					break;
 				}
-			$cmd->setCollectDate('');
-			$cmd->event($value);
-			log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
+			
 			}
 		}
 	}
