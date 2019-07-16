@@ -177,7 +177,7 @@ class tter extends eqLogic {
 		if (!is_object($maj)) {
             $maj = new tterCmd();
 			$maj->setLogicalId('maj');
-			$maj.setIsVisible(1);
+			//$maj.setIsVisible(1);
             $maj->setOrder(19);
             $maj->setName(__('Refresh', __FILE__));
 		}
