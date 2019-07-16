@@ -67,6 +67,20 @@ class tter extends eqLogic {
     public function postSave() {
 		log::add('tter','debug','Début ajout des commandes');
 		
+		// Création des commandes de type action		
+		$refresh = $this->getCmd(null, 'refresh');
+		if (!is_object($refresh)) {
+			$refresh = new tterCmd();
+			$refresh->setLogicalId('refreshtter');
+			$refresh->setOrder(1);
+			$refreshTter->setName(__('Mise à jour', __FILE__));
+			log::add('tter','debug','Ajout commande : refresh');
+		}
+		$refresh->setType('action');
+		$refresh->setSubType('other');
+		$refresh->setEqLogic_id($this->getId());
+		$refresh->save();
+
 		// Création des différentes commandes de type 'info'
 		// Création de la commande depart
         $depart = $this->getCmd(null, 'depart');
@@ -170,44 +184,8 @@ class tter extends eqLogic {
 			$arrayTrajets[$indexTrajet]['retard']->setEventOnly(1);
 			$arrayTrajets[$indexTrajet]['retard']->setEqLogic_id($this->getId());
 			$arrayTrajets[$indexTrajet]['retard']->save();
-		}
-	
-		// Création des commandes de type action
-		$maj = $this->getCmd(null, 'maj');
-		if (!is_object($maj)) {
-            $maj = new tterCmd();
-			$maj->setLogicalId('maj');
-			//$maj.setIsVisible(1);
-            $maj->setOrder(19);
-            $maj->setName(__('Refresh', __FILE__));
-		}
-		$maj->setType('action');
-		$maj->setSubType('other');
-		$maj->setEqLogic_id($this->getId());
-		$maj->save();
-
-		/*$refreshTter = $this->getCmd(null, 'refreshtter');
-		log::add('tter','debug','getcmd refresh '.$refreshTter);
-		if (!is_object($refreshTter)) {
-			$refreshTter = new tterCmd();
-			log::add('tter','debug','création objet cmd refresh '.$refreshTter);
-			$refreshTter->setLogicalId('refreshtter');
-			log::add('tter','debug','création logical id refresh '.$refreshTter);
-			$refreshTter.setIsVisible(1);
-			log::add('tter','debug','création isvisible '.$refreshTter);
-			$depart->setOrder(1);
-			log::add('tter','debug','création order '.$refreshTter);
-			$refreshTter->setName(__('Mise à jour', __FILE__));
-			log::add('tter','debug','création name '.$refreshTter);
-
-			log::add('tter','debug','Ajout commande : refreshtter');
-		}
-		$refreshTter->setType('action');
-		$refreshTter->setSubType('other');
-		$refreshTter->setEqLogic_id($this->getId());
-		$refreshTter->save();*/
-
-
+		}	
+		
 		log::add('tter','debug','Fin ajout des commandes');
 
     }
@@ -322,7 +300,7 @@ class tterCmd extends cmd {
     public function execute($_options = array()) {
 		log::add('tter','debug','Lancement fonction execute');
 		$tter = $this->getEqLogic();
-		if ($this->getLogicalId() == 'maj') {
+		if ($this->getLogicalId() == 'refresh') {
 			log::add('tter','debug','appel fonction refresh');
 			$tter->refreshData($tter);
 		}
