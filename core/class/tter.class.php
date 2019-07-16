@@ -74,6 +74,7 @@ class tter extends eqLogic {
 			$depart->setIsVisible(1);
       		$depart->setOrder(1);
 			$depart->setName(__('Gare de départ', __FILE__));
+			log::add('tter','debug','Ajout commande : depart');
 		}
 		$depart->setType('info');
         $depart->setSubType('string');
@@ -88,7 +89,8 @@ class tter extends eqLogic {
 			$arrivee->setLogicalId('arrivee');
 			$arrivee->setIsVisible(1);
       		$arrivee->setOrder(2);
-		    $arrivee->setName(__('Gare d\'arrivée', __FILE__));
+			$arrivee->setName(__('Gare d\'arrivée', __FILE__));
+			log::add('tter','debug','Ajout commande : arrivee');
 		}
 		$arrivee->setType('info');
 		$arrivee->setSubType('string');
@@ -112,8 +114,9 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepart'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureDepart']->setLogicalId('heureDepart'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setIsVisible(1);
-				//$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(3+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(3+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setName(__('Heure départ train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : heureDepart'.$indexTrajet);
 			}
 			$arrayTrajets[$indexTrajet]['heureDepart']->setType('info');
 			$arrayTrajets[$indexTrajet]['heureDepart']->setSubType('string');
@@ -128,6 +131,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setIsVisible(1);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(4+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setName(__('Heure arrivée train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : heureArrivee'.$indexTrajet);
 			}
 			$arrayTrajets[$indexTrajet]['heureArrivee']->setType('info');
 			$arrayTrajets[$indexTrajet]['heureArrivee']->setSubType('string');
@@ -142,6 +146,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setIsVisible(1);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(5+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setName(__('Temps de trajet train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : dureeTrajet'.$indexTrajet);
 			}
 			$arrayTrajets[$indexTrajet]['dureeTrajet']->setType('info');
 			$arrayTrajets[$indexTrajet]['dureeTrajet']->setSubType('string');
@@ -156,6 +161,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['retard']->setIsVisible(1);
 				$arrayTrajets[$indexTrajet]['retard']->setOrder(6+$indexTrajet*4);
 				$arrayTrajets[$indexTrajet]['retard']->setName(__('Retard train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : retard'.$indexTrajet);
 			}
 			$arrayTrajets[$indexTrajet]['retard']->setType('info');
 			$arrayTrajets[$indexTrajet]['retard']->setSubType('string');
@@ -169,8 +175,10 @@ class tter extends eqLogic {
 		if (!is_object($refresh)) {
             $refresh = new tterCmd();
             $refresh->setLogicalId('refresh');
-            $refresh->setOrder(19);
-            $refresh->setName(__('Mise à jour', __FILE__));
+			$refresh->setOrder(19);
+			$refresh.setIsVisible(1);
+			$refresh->setName(__('Mise à jour', __FILE__));
+			log::add('tter','debug','Ajout commande : refresh');
 		}
 		$refresh->setType('action');
 		$refresh->setSubType('other');
@@ -200,11 +208,14 @@ class tter extends eqLogic {
 	 * 
 	 */
 	public function refreshData($tter) {
-		
+
+		log::add('tter','debug','Debut fonction refreshData');
 		$apiKey = config::byKey('apiKey', 'ter', 0);		
 		// appel de l'API SNCF
 		$api = new SncfApi();
-		$trajets = $api->retrieveJourneys($apiKey, $stopAreaFromId, $stopAreaToId);
+		$gareDepart = $ter->getConfiguration('gareDepart');
+     	$gareArrivee = $ter->getConfiguration('gareArrivee');
+		$trajets = $api->retrieveJourneys($apiKey, $gareDepart, $gareArrivee);
 		log::add('tter','debug','Trajets '.serialize($trajets));
 	
 		// find the right train...
@@ -282,8 +293,10 @@ class tterCmd extends cmd {
      */
 
     public function execute($_options = array()) {
+		log::add('tter','debug','Lancement fonction execute');
 		$tter = $this->getEqLogic();
 		if ($this->getLogicalId() == 'refresh') {
+			log::add('tter','debug','appel fonction refresh');
 			$tter->refreshData($tter);
 		}
     }

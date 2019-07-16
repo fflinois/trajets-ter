@@ -150,7 +150,7 @@ include_file('desktop', 'tter', 'css', 'tter');
 							<div class="form-group">
 								<label class="col-sm-6 control-label">{{Gare de départ}}</label>
 								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="stopAreaFromId" placeholder="stop_area:OCE:SA:87611004" />
+									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareDepart" placeholder="stop_area:OCE:SA:87611004" />
 									<p class="help-block" style="font-size : 0.8em;">
 										<i class="fa fa-info-circle"></i> Récupérez le champ ID dans le résultat de la requête https://api.sncf.com/v1/coverage/sncf/places?q=#nom_gare_sncf# <br/>
 										avec #nom_gare_sncf# = gare SNCF de départ. Exemple : TOULOUSE-MATABIAU
@@ -160,7 +160,7 @@ include_file('desktop', 'tter', 'css', 'tter');
 							<div class="form-group">
 								<label class="col-sm-6 control-label">{{Trajet gare de départ}}</label>
 								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="stopAreaFromTimeTo" placeholder="20" />
+									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareArrivee" placeholder="20" />
 									<p class="help-block" style="font-size : 0.8em;">Temps de trajet en minutes pour atteindre la gare de départ</p>
 								</div>
 							</div>
