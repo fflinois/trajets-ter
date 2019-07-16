@@ -176,9 +176,7 @@ class tter extends eqLogic {
 		$refresh->setSubType('other');
 		$refresh->setEqLogic_id($this->getId());
 		$refresh->save();
-
-		$ter = $this->getEqLogic();
-		$ter->refreshData();
+	
     }
 
     public function preUpdate() {
@@ -201,10 +199,9 @@ class tter extends eqLogic {
 	 * méthode appelée pour remplir les champs avec un appel à l'API
 	 * 
 	 */
-	public function refreshData() {
+	public function refreshData($tter) {
 		
-		$apiKey = config::byKey('apiKey', 'ter', 0);
-		$ter = $this->getEqLogic();
+		$apiKey = config::byKey('apiKey', 'ter', 0);		
 		// appel de l'API SNCF
 		$api = new SncfApi();
 		$trajets = $api->retrieveJourneys($apiKey, $stopAreaFromId, $stopAreaToId);
@@ -216,7 +213,7 @@ class tter extends eqLogic {
 			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['departureDate']));
 			$heureArrivee = date('Hi',strtotime($journeys[$indexTrajet]['arrivalDate']));
 			// update widget info
-			foreach ($ter->getCmd('info') as $cmd) {
+			foreach ($tter->getCmd('info') as $cmd) {
 				switch ($cmd->getLogicalId()) {
 				  
 					case 'retard'+$indexTrajet:
@@ -285,9 +282,9 @@ class tterCmd extends cmd {
      */
 
     public function execute($_options = array()) {
-		$ter = $this->getEqLogic();
+		$tter = $this->getEqLogic();
 		if ($this->getLogicalId() == 'refresh') {
-				  $ter->refreshData();
+			$tter->refreshData($tter);
 		}
     }
 
