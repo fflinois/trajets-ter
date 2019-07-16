@@ -71,9 +71,9 @@ class tter extends eqLogic {
 		$refresh = $this->getCmd(null, 'refresh');
 		if (!is_object($refresh)) {
 			$refresh = new tterCmd();
-			$refresh->setLogicalId('refreshtter');
+			$refresh->setLogicalId('refresh');
 			$refresh->setOrder(1);
-			$refreshTter->setName(__('Mise à jour', __FILE__));
+			$refresh->setName(__('Mise à jour', __FILE__));
 			log::add('tter','debug','Ajout commande : refresh');
 		}
 		$refresh->setType('action');
