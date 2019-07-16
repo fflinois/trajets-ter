@@ -222,7 +222,8 @@ class tter extends eqLogic {
 		log::add('tter','debug',$gareDepart);
 		$gareArrivee = $tter->getConfiguration('gareArrivee');
 		log::add('tter','debug',$gareArrivee);
-		$trajets = $this->getTrajets($apiKey, $gareDepart, $gareArrivee);
+		$apiscnf = $this->getEqLogic();
+		$trajets = $apiscnf->getTrajets($apiKey, $gareDepart, $gareArrivee);
 		log::add('tter','debug','Trajets '.serialize($trajets));
 	
 		// find the right train...
