@@ -18,6 +18,8 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
+require_once __DIR__  .'/../../core/php/class.SncfApi.php';
+
 
 class tter extends eqLogic {
     /*     * *************************Attributs****************************** */
@@ -216,8 +218,8 @@ class tter extends eqLogic {
 		$apiKey = config::byKey('apiKey', 'tter', 0);
 		log::add('tter','debug',$apiKey);		
 		// appel de l'API SNCF
-		//$api = new SncfApi();
-		//log::add('tter','debug',$api);
+		$api = new SncfApi();
+		log::add('tter','debug',$api);
 		$depart = $tter->getConfiguration('gareDepart');
 		log::add('tter','debug',$gareDepart);
 		$arrivee = $tter->getConfiguration('gareArrivee');
@@ -464,16 +466,16 @@ foreach($responseJSON['journeys'] as $trajet) {
 
 		// store data for current train
 	$trajets[$indexTrajet] = array(
-			'numeroTrain' => $numeroTrain,
-		  'gareDepart' => $gareDepart,
-		  'gareArrivee' => $gareArrivee,
-		  'dateTimeDepart' => $dateTimeDepart,
-		  'heureDepart' => $heureDepart,
-		  'dateTimeArrivee' => $dateTimeArrivee,
-		  'heureArrivee' => $heureArrivee,
-		  'dureeTrajet' => $dureeTrajet,
-		  'retard' => $retard,
-		  'updatedheureDepart' => $updatedTime
+		'numeroTrain' => $numeroTrain,
+		'gareDepart' => $gareDepart,
+		'gareArrivee' => $gareArrivee,
+		'dateTimeDepart' => $dateTimeDepart,
+		'heureDepart' => $heureDepart,
+		'dateTimeArrivee' => $dateTimeArrivee,
+		'heureArrivee' => $heureArrivee,
+		'dureeTrajet' => $dureeTrajet,
+		'retard' => $retard,
+		'updatedheureDepart' => $updatedTime
 		);
 	$indexTrajet++;
   }
