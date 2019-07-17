@@ -340,32 +340,38 @@ class tter extends eqLogic {
 				  
 					case 'retard'.$indexTrajet:
 						$cmd->setCollectDate('');
-						$cmd->event($trajets[$indexTrajet]['retard']);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
+						$value = $trajets[$indexTrajet]['retard'];
+						$cmd->event($value);
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '.$value);
 						break;
 					case 'dureeTrajet'.$indexTrajet:
 						$cmd->setCollectDate('');
-						$cmd->event(substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2));
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
+						$value = substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2);
+						$cmd->event($value);
+						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '.$value);
 						break;
 					case 'heureArrivee'.$indexTrajet:
 						$cmd->setCollectDate('');
-						$cmd->event(substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2));
+						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
+						$cmd->event($value);
 						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
 					case 'heureDepart'.$indexTrajet:
-					  	$cmd->setCollectDate('');
-						$cmd->event(substr($heureDepart,0,2)."h".substr($heureDepart,2,2));
+						$cmd->setCollectDate('');
+						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
+						$cmd->event($value);
 						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
 						break;
 					case 'arrivee':
 						$cmd->setCollectDate('');
-						$cmd->event($trajets[$indexTrajet]['gareArrivee']);
+						$value = $trajets[$indexTrajet]['gareArrivee'];
+						$cmd->event($value);
 						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
         				break;
 					case 'depart':
 						$cmd->setCollectDate('');
-						$cmd->event($trajets[$indexTrajet]['gareDepart'];
+						$value = $trajets[$indexTrajet]['gareDepart'];
+						$cmd->event($value);
 						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
        					break;
 				}
