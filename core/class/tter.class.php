@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once dirname(__FILE__).'/../../../tter/3rdparty/SncfApi.php';
+require_once dirname(__FILE__).'/../../../tter/3rparty/SncfApi.php';
 
 
 class tter extends eqLogic {
