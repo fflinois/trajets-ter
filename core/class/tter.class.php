@@ -57,7 +57,7 @@ class tter extends eqLogic {
 				if (!is_object($refresh)) {//Si la commande n'existe pas
 					continue; //continue la boucle
 				}
-				$tter->execCmd(); // la commande existe on la lance
+				$refresh->execCmd(); // la commande existe on la lance
 			}
 		}
 	}

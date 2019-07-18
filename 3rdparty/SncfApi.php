@@ -98,7 +98,11 @@ class SncfApi {
 				'updatedheureDepart' => $updatedTime
 				);
 			log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
-
+      log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
+      log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
+      log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
+      log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
+      log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
 			$indexTrajet++;
 		}
 }
