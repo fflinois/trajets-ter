@@ -224,7 +224,7 @@ class tter extends eqLogic {
 		log::add('tter','debug',$arrivee);
 		
 		// appel de l'API SNCF
-		log::add('tter','debug','trajets : '.SncfApi::getTrajets($apiKey,$depart,$arrivee)[0]['gareDepart']);
+		log::add('tter','debug','trajets : '.SncfApi::getTrajets($apiKey,$depart,$arrivee));
 		
 
 		// ##############################################################
