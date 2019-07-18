@@ -48,7 +48,7 @@ class tter extends eqLogic {
       public static function cronDaily() {
 
       }
-    
+     */
 
 	public static function cron15($_eqlogic_id = null, $from=__FUNCTION__) {
 		foreach (self::byType('tter') as $tter) {//parcours tous les équipements du plugin tter
@@ -60,7 +60,7 @@ class tter extends eqLogic {
 				$tter->execCmd(); // la commande existe on la lance
 			}
 		}
-	} */
+	}
 
 
     /*     * *********************Méthodes d'instance************************* */
@@ -202,7 +202,7 @@ class tter extends eqLogic {
 		log::add('tter','debug','Fin ajout des commandes');
 		
 		log::add('tter','debug','Fin ajout des commandes');
-		//$refresh->execCmd(); // la commande existe on la lance
+		$refresh->execCmd(); // la commande existe on la lance
     }
 
     public function preUpdate() {
@@ -238,7 +238,7 @@ class tter extends eqLogic {
 		
 		// appel de l'API SNCF
 		log::add('tter','debug','Appel API SNCF');
-		$trajets = SncfApi::getTrajets($apiKey,$depart,$arrivee));
+		$trajets = SncfApi::getTrajets($apiKey,$depart,$arrivee);
 	
 		// set des infos récuperer
 		$currentDate = strtotime(date("Ymd\TH:i"));
