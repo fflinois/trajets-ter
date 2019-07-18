@@ -102,5 +102,7 @@ class SncfApi {
 			$indexTrajet++;
 		}
 }
+}
+
 
  ?>
