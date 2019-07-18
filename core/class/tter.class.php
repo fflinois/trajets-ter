@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once dirname(__FILE__).'/../../../tter/3rparty/SncfApi.php';
+require_once dirname(__FILE__).'/../../../tter/3rdparty/SncfApi.php';
 
 
 class tter extends eqLogic {
@@ -217,13 +217,14 @@ class tter extends eqLogic {
 		log::add('tter','debug','Debut fonction refreshData');
 		$apiKey = config::byKey('apiKey', 'tter', 0);
 		log::add('tter','debug',$apiKey);		
-		// appel de l'API SNCF
-		$api = new SncfApi();
-		log::add('tter','debug',$api);
+				
 		$depart = $tter->getConfiguration('gareDepart');
 		log::add('tter','debug',$gareDepart);
 		$arrivee = $tter->getConfiguration('gareArrivee');
 		log::add('tter','debug',$gareArrivee);
+		
+		// appel de l'API SNCF
+		log::add('tter','debug','trajets : '.SncfApi::getTrajets($apiKey,$depart,$arrivee));
 
 		//$api = $this->getEqLogic();
 		//log::add('tter','debug',$api);
