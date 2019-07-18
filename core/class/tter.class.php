@@ -202,7 +202,7 @@ class tter extends eqLogic {
 		log::add('tter','debug','Fin ajout des commandes');
 		
 		log::add('tter','debug','Fin ajout des commandes');
-		$refresh->execCmd(); // la commande existe on la lance
+		//$refresh->execCmd(); // la commande existe on la lance
     }
 
     public function preUpdate() {
