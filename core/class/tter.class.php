@@ -50,6 +50,17 @@ class tter extends eqLogic {
       }
      */
 
+	public static function cron15($_eqlogic_id = null, $from=__FUNCTION__) {
+		foreach (self::byType('tter') as $tter) {//parcours tous les équipements du plugin tter
+			if ($tter->getIsEnable() == 1) {//vérifie que l'équipement est actif
+				$refresh = $tter->getCmd(null, 'refresh');//retourne la commande "refresh si elle exxiste
+				if (!is_object($refresh)) {//Si la commande n'existe pas
+					continue; //continue la boucle
+				}
+				$tter->execCmd(); // la commande existe on la lance
+			}
+		}
+	}
 
 
     /*     * *********************Méthodes d'instance************************* */
