@@ -216,20 +216,16 @@ class tter extends eqLogic {
 
 		log::add('tter','debug','Debut fonction refreshData');
 		$apiKey = config::byKey('apiKey', 'tter', 0);
-		log::add('tter','debug',$apiKey);		
+		log::add('tter','debug','apiKey : '.$apiKey);		
 				
 		$depart = $tter->getConfiguration('gareDepart');
-		log::add('tter','debug',$gareDepart);
+		log::add('tter','debug',$depart);
 		$arrivee = $tter->getConfiguration('gareArrivee');
-		log::add('tter','debug',$gareArrivee);
+		log::add('tter','debug',$arrivee);
 		
 		// appel de l'API SNCF
-		log::add('tter','debug','trajets : '.SncfApi::getTrajets($apiKey,$depart,$arrivee));
-
-		//$api = $this->getEqLogic();
-		//log::add('tter','debug',$api);
-		//$trajets = $api->getTrajets($apiKey, $gareDepart, $gareArrivee);
-		//log::add('tter','debug','Trajets '.serialize($trajets));
+		log::add('tter','debug','trajets : '.SncfApi::getTrajets($apiKey,$depart,$arrivee)[$indexTrajet]['gareDepart']);
+		
 
 		// ##############################################################
 
