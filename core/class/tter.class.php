@@ -243,18 +243,8 @@ class tter extends eqLogic {
 		// set des infos récuperer
 		$currentDate = strtotime(date("Ymd\TH:i"));
 		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
-
-			log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
-      log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
-      log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
-      log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
-      log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
-      log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
 			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['heureDepart']));
-			log::add('tter','debug','heure de depart :'.$heureDepart);
-
 			$heureArrivee = date('Hi',strtotime($trajets[$indexTrajet]['heureArrivee']));
-			log::add('tter','debug','heure d arrivee : '.$heureArrivee);
 
 			// update widget info
 			foreach ($tter->getCmd('info') as $cmd) {

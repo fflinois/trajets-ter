@@ -104,8 +104,9 @@ class SncfApi {
       log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
       log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
 			$indexTrajet++;
-		}
-}
+    }
+    return $trajets;
+  }
 }
 
 
