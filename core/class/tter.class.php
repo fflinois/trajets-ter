@@ -305,6 +305,9 @@ class tter extends eqLogic {
 				return $replace;
 		  	}
 		$this->emptyCacheWidget(); //vide le cache. Pratique pour le développement
+		$depart = $this->getCmd(null, 'depart');
+
+		$replace['#test#'] = $depart->execCmd();
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
     }
