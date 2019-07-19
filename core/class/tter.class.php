@@ -305,6 +305,7 @@ class tter extends eqLogic {
 				return $replace;
 		  	}
 		$this->emptyCacheWidget(); //vide le cache. Pratique pour le développement
+		
 		$depart = $this->getCmd(null, 'depart');
 		$arrivee = $this->getCmd(null, 'arrivee');
 		$heureDepart0 = $this->getCmd(null, 'heureDepart0');
