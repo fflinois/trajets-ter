@@ -70,7 +70,7 @@ class SncfApi {
 							// compute delay
 							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) ).' minutes';
 							if ($retard == 0) {
-								$retard = 'aucun';
+								$retard = 'train à l\'heure';
 							} elseif ($retard > 1) {
 								$retard .= ' minutes';
 							} else {

@@ -306,8 +306,35 @@ class tter extends eqLogic {
 		  	}
 		$this->emptyCacheWidget(); //vide le cache. Pratique pour le développement
 		$depart = $this->getCmd(null, 'depart');
+		$arrivee = $this->getCmd(null, 'arrivee');
+		$heureDepart0 = $this->getCmd(null, 'heureDepart0');
+		$heureArrivee0 = $this->getCmd(null, 'heureArrivee0');
+		$retard0 = $this->getCmd(null, 'retard0');
+		$heureDepart1 = $this->getCmd(null, 'heureDepart1');
+		$heureArrivee1 = $this->getCmd(null, 'heureArrivee1');
+		$retard1 = $this->getCmd(null, 'retard1');
+		$heureDepart2 = $this->getCmd(null, 'heureDepart2');
+		$heureArrivee2 = $this->getCmd(null, 'heureArrivee2');
+		$retard2 = $this->getCmd(null, 'retard2');
+		$heureDepart3 = $this->getCmd(null, 'heureDepart3');
+		$heureArrivee3 = $this->getCmd(null, 'heureArrivee3');
+		$retard3 = $this->getCmd(null, 'retard3');
 
-		$replace['#test#'] = $depart->execCmd();
+		$replace['#depart#'] = $depart->execCmd();
+		$replace['#arrivee#'] = $depart->execCmd();
+		$replace['#heureDepart0#'] = $heureDepart0->execCmd();
+		$replace['#heureArrivee0#'] = $heureArrivee0->execCmd();
+		$replace['#retard0#'] = $retard0->execCmd();
+		$replace['#heureDepart1#'] = $heureDepart1->execCmd();
+		$replace['#heureArrivee1#'] = $heureArrivee1->execCmd();
+		$replace['#retard1#'] = $retard1->execCmd();
+		$replace['#heureDepart2#'] = $heureDepart2->execCmd();
+		$replace['#heureArrivee2#'] = $heureArrivee2->execCmd();
+		$replace['#retard2#'] = $retard2->execCmd();
+		$replace['#heureDepart3#'] = $heureDepart3->execCmd();
+		$replace['#heureArrivee3#'] = $heureArrivee3->execCmd();
+		$replace['#retard3#'] = $retard3->execCmd();
+
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
     }
