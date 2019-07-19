@@ -322,7 +322,7 @@ class tter extends eqLogic {
 		$retard3 = $this->getCmd(null, 'retard3');
 
 		$replace['#depart#'] = $depart->execCmd();
-		$replace['#arrivee#'] = $depart->execCmd();
+		$replace['#arrivee#'] = $arrivee->execCmd();
 		$replace['#heureDepart0#'] = $heureDepart0->execCmd();
 		$replace['#heureArrivee0#'] = $heureArrivee0->execCmd();
 		$replace['#retard0#'] = $retard0->execCmd();
