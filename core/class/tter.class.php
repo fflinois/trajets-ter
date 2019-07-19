@@ -24,6 +24,8 @@ require_once dirname(__FILE__).'/../../../tter/3rdparty/SncfApi.php';
 class tter extends eqLogic {
     /*     * *************************Attributs****************************** */
 
+	public static $_widgetPossibility = array('custom' => true); // c'est cette ligne qu'il faut ajouter
+
 
 
     /*     * ***********************Methode static*************************** */
@@ -295,12 +297,18 @@ class tter extends eqLogic {
 
 
 
-    /*
-     * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
-      public function toHtml($_version = 'dashboard') {
-
-      }
-     */
+    
+    // Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
+    public function toHtml($_version = 'dashboard') {
+		$replace = $this->preToHtml($_version); //récupère les informations de notre équipement
+		  	if (!is_array($replace)) {
+				return $replace;
+		  	}
+		$this->emptyCacheWidget(); //vide le cache. Pratique pour le développement
+		$version = jeedom::versionAlias($_version);
+		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
+    }
+    
 
     /*
      * Non obligatoire mais ca permet de déclencher une action après modification de variable de configuration
