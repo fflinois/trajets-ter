@@ -51,7 +51,7 @@ class SncfApi {
 				$retard = 'PAS DE SERVICE';
 			}else{
 				// sinon recherche des retards éventuels
-				$retard = 'aucun';
+				$retard = 'train à l\'heure';
 				$updatedTime = $heureDepart;
 				$numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
 				log::add('tter','debug','Disruption ID '.$numdisrup);
