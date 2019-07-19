@@ -1,0 +1,15 @@
+#tter .container{
+    width: 100%;
+}
+
+.gares{
+    background-color: blue;
+}
+
+.horaires0, .horaires2{
+    background-color:cornflowerblue ;
+}
+
+.horaires1, .horaires3{
+    background-color: blue;
+}
