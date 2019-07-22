@@ -3,7 +3,7 @@
 }
 
 #tter, #tter .container{
-    width: 250px;
+    width: 250px !important;
 }
 
 .gares{
@@ -20,6 +20,7 @@
 
 .greenText{
     color: green;
+    font-weight: bold;
 }
 
 .redText{
