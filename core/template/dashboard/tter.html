@@ -47,5 +47,10 @@
                 <div class='col-md-12'>#retard3#</div>
             </div>
         </div>
-    </div>    
+    </div>
+    <script>
+    $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
+         jeedom.cmd.execute({id: '#refresh#'});
+    });
+    </script>    
 </div>
