@@ -327,30 +327,30 @@ class tter extends eqLogic {
 			
 		$replace['#heureDepart0#'] = $heureDepart0->execCmd();
 		$replace['#heureArrivee0#'] = $heureArrivee0->execCmd();
-			$replace['#retard0#'] = '<center class="greenText">'.$retard0->execCmd().'</center>';
+			$replace['#retard0#'] = '<center class="whiteText">'.$retard0->execCmd().'</center>';
 		}else{
-			$replace['#retard0#'] = '<center class="redText">'.$retard0->execCmd().'</center>';
+			$replace['#retard0#'] = '<center class="yellowBoldText">'.$retard0->execCmd().'</center>';
 		}
 		$replace['#heureDepart1#'] = $heureDepart1->execCmd();
 		$replace['#heureArrivee1#'] = $heureArrivee1->execCmd();
 		if($retard1->execCmd() == 'train à l\'heure'){
-			$replace['#retard1#'] = '<center class="greenText">'.$retard1->execCmd().'</center>';
+			$replace['#retard1#'] = '<center class="whiteText">'.$retard1->execCmd().'</center>';
 		}else{
-			$replace['#retard1#'] = '<center class="redText">'.$retard1->execCmd().'</center>';
+			$replace['#retard1#'] = '<center class="yellowBoldText">'.$retard1->execCmd().'</center>';
 		}		
 		$replace['#heureDepart2#'] = $heureDepart2->execCmd();
 		$replace['#heureArrivee2#'] = $heureArrivee2->execCmd();
 		if($retard2->execCmd() == 'train à l\'heure'){
-			$replace['#retard2#'] = '<center class="greenText">'.$retard2->execCmd().'</center>';
+			$replace['#retard2#'] = '<center class="whiteText">'.$retard2->execCmd().'</center>';
 		}else{
-			$replace['#retard2#'] = '<center class="redText">'.$retard2->execCmd().'</center>';
+			$replace['#retard2#'] = '<center class="yellowBoldText">'.$retard2->execCmd().'</center>';
 		}	
 		$replace['#heureDepart3#'] = $heureDepart3->execCmd();
 		$replace['#heureArrivee3#'] = $heureArrivee3->execCmd();
 		if($retard3->execCmd() == 'train à l\'heure'){
-			$replace['#retard3#'] = '<center class="greenText">'.$retard3->execCmd().'</center>';
+			$replace['#retard3#'] = '<center class="whiteText">'.$retard3->execCmd().'</center>';
 		}else{
-			$replace['#retard3#'] = '<center class="redText">'.$retard3->execCmd().'</center>';
+			$replace['#retard3#'] = '<center class="yellowBoldText">'.$retard3->execCmd().'</center>';
 		}	
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  

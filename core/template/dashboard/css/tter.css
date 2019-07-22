@@ -3,7 +3,7 @@
 }
 
 #tter, #tter .container{
-    width: 250px !important;
+    width: 390px !important;
 }
 
 .gares{
@@ -18,13 +18,16 @@
     background-color: blue;
 }
 
-.greenText{
-    color: green;
+.whiteText{
+    color: white;
+}
+
+.whiteBoldText{
+    color: white;
     font-weight: bold;
 }
 
-.redText{
-    color: red;
+.yellowBoldText{
+    color: yellow;
     font-weight: bold;
-    text-decoration: blink;
 }
