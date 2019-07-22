@@ -17,3 +17,13 @@
 .horaires1, .horaires3{
     background-color: blue;
 }
+
+.greenText{
+    color: green;
+}
+
+.redText{
+    color: red;
+    font-weight: bold;
+    text-decoration: blink;
+}
