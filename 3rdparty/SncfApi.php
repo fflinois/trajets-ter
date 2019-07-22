@@ -68,7 +68,7 @@ class SncfApi {
 						if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {
 							$updatedTime = $impactStop['amended_departure_time'];
 							// compute delay
-							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) ).' minutes';
+							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
 							if ($retard == 0) {
 								$retard = 'train à l\'heure';
 							} elseif ($retard > 1) {

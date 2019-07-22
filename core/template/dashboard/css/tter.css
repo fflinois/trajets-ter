@@ -2,7 +2,7 @@
     background-color: transparent !important;
 }
 
-#tter .container{
+#tter, #tter .container{
     width: 250px;
 }
 
