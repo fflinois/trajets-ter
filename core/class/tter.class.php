@@ -323,9 +323,10 @@ class tter extends eqLogic {
 
 		$replace['#depart#'] = $depart->execCmd();
 		$replace['#arrivee#'] = $arrivee->execCmd();
+		if($retard0->execCmd() == 'train à l\'heure'){
+			
 		$replace['#heureDepart0#'] = $heureDepart0->execCmd();
 		$replace['#heureArrivee0#'] = $heureArrivee0->execCmd();
-		if($retard0->execCmd() == 'train à l\'heure'){
 			$replace['#retard0#'] = '<center class="greenText">'.$retard0->execCmd().'</center>';
 		}else{
 			$replace['#retard0#'] = '<center class="redText">'.$retard0->execCmd().'</center>';
