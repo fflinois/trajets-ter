@@ -362,7 +362,7 @@ class tter extends eqLogic {
 					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
 			}				
 			
-			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'"><di>'.$retard->execCmd().'</div></center>';
+			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'"><div>'.$retard->execCmd().'</div></center>';
 			
 		}		
 		$version = jeedom::versionAlias($_version);
