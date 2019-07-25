@@ -72,7 +72,8 @@ class tter extends eqLogic {
     }
 
     public function postInsert() {
-        
+        $tter = $this->getEqLogic();
+		$tter->refreshData($tter);		
     }
 
     public function preSave() {
@@ -203,7 +204,6 @@ class tter extends eqLogic {
 		
 		log::add('tter','debug','Fin ajout des commandes');
 		
-		//$refresh->execCmd(); // la commande existe on la lance
     }
 
     public function preUpdate() {
@@ -211,7 +211,9 @@ class tter extends eqLogic {
     }
 
     public function postUpdate() {
-        $this->postSave();
+		$this->postSave();
+		$tter = $this->getEqLogic();
+		$tter->refreshData($tter);
     }
 
     public function preRemove() {
