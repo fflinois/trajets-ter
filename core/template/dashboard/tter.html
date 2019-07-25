@@ -18,7 +18,7 @@
     </center>
     <div class='container'>
         <div class='row gares'>
-            <div class='col-md-12'><center class='gare whiteBoldText'>Trajet #depart# <span class="glyphicon glyphicon-arrow-right"></span>#arrivee#</center></div>
+            <div class='col-md-12'><center class='gare whiteBoldText'>#depart# <span class="glyphicon glyphicon-arrow-right"></span>#arrivee#</center></div>
         </div>
         <div class='row horaires0'>
             <div class='col-md-4'>#retard0#</div>
@@ -43,7 +43,7 @@
     </div>
     <script>
     $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
-         jeedom.cmd.execute({id: '#refresh#'});
+         jeedom.cmd.execute({id: 'refresh'});
     });
     </script>    
 </div>

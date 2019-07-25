@@ -325,22 +325,23 @@ class tter extends eqLogic {
 			$classForDelayedArrivalTime = 'heure ';
 			$classForRetard = '';
 			$isDelayed = false;
+			$isDeleted = false;
 
 			if($retard->execCmd() == 'à l\'heure'){
 				$classForDepartureTime .= 'whiteText';
 				$classForArrivalTime .= 'whiteText';
-				$classForRetard = 'whiteText';	
+				$classForRetard = 'class="alert alert-success" role="alert"';
 			}else if($retard == "supprimé"){
 				$classForDepartureTime .= 'whiteText deleted';
 				$classForArrivalTime .= 'whiteText deleted';
-				$classForRetard = 'redText';	
+				$classForRetard = 'class="alert alert-danger" role="alert"';
 			}else{
 				$isDelayed = true;
 				$classForDepartureTime .= 'whiteText deleted';
 				$classForArrivalTime .= 'whiteText deleted';
 				$classForDelayedDepartureTime .= 'redText';
 				$classForDelayedArrivalTime .= 'redText';
-				$classForRetard = 'redText';
+				$classForRetard = 'class="alert alert-warning" role="alert"';
 			}
 
 			if($isDelayed){
@@ -354,14 +355,15 @@ class tter extends eqLogic {
 					.'<span class="'.$classForArrivalTime.'">'.$heureDepart->execCmd().' </span>'
 					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureDepart->execCmd().'</span>'
 					.'</center>';	
-			}else{
+			}else {
 				$replace['#heureDepart'.$indexTrajet.'#'] =
 					'<center class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</center>';
 				$replace['#heureArrivee'.$indexTrajet.'#'] =
 					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
 			}				
-
-			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'">'.$retard->execCmd().'</center>';
+			
+			$replace['#retard'.$indexTrajet.'#'] = '<center '.$classForRetard.'">'.$retard->execCmd().'</center>';
+			
 		}		
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
