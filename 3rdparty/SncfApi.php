@@ -48,7 +48,7 @@ class SncfApi {
 
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
-				$retard = 'Train supprimé';
+				$retard = 'supprimé';
 			}else{
 				// sinon recherche des retards éventuels
 				$retard = 'à l\'heure';
