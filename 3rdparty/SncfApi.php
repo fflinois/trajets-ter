@@ -48,10 +48,10 @@ class SncfApi {
 
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
-				$retard = 'PAS DE SERVICE';
+				$retard = 'Train supprimé';
 			}else{
 				// sinon recherche des retards éventuels
-				$retard = 'train à l\'heure';
+				$retard = 'à l\'heure';
 				$updatedTime = $heureDepart;
 				$numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
 				log::add('tter','debug','Disruption ID '.$numdisrup);
@@ -71,7 +71,7 @@ class SncfApi {
 							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
 							$retard = 'retard de '.$retard;
 							if ($retard == 0) {
-								$retard = 'train à l\'heure';
+								$retard = 'à l\'heure';
 							} elseif ($retard > 1) {
 								$retard .= ' minutes';
 							} else {

@@ -306,52 +306,64 @@ class tter extends eqLogic {
 		  	}
 		$this->emptyCacheWidget(); //vide le cache. Pratique pour le développement
 		
+		// on récupere les infos données par l'API SNCF
 		$depart = $this->getCmd(null, 'depart');
 		$arrivee = $this->getCmd(null, 'arrivee');
-		$heureDepart0 = $this->getCmd(null, 'heureDepart0');
-		$heureArrivee0 = $this->getCmd(null, 'heureArrivee0');
-		$retard0 = $this->getCmd(null, 'retard0');
-		$heureDepart1 = $this->getCmd(null, 'heureDepart1');
-		$heureArrivee1 = $this->getCmd(null, 'heureArrivee1');
-		$retard1 = $this->getCmd(null, 'retard1');
-		$heureDepart2 = $this->getCmd(null, 'heureDepart2');
-		$heureArrivee2 = $this->getCmd(null, 'heureArrivee2');
-		$retard2 = $this->getCmd(null, 'retard2');
-		$heureDepart3 = $this->getCmd(null, 'heureDepart3');
-		$heureArrivee3 = $this->getCmd(null, 'heureArrivee3');
-		$retard3 = $this->getCmd(null, 'retard3');
-
 		$replace['#depart#'] = $depart->execCmd();
 		$replace['#arrivee#'] = $arrivee->execCmd();
-		if($retard0->execCmd() == 'train à l\'heure'){
+
+		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
+
+			$heureDepart = $this->getCmd(null, 'heureDepart'.$indexTrajet);
+			$heureArrivee = $this->getCmd(null, 'heureArrivee'.$indexTrajet);
+
+			$dureeTrajet = $this->getCmd(null, 'dureeTrajet'.$indexTrajet);
+			$retard = $this->getCmd(null, 'retard'.$indexTrajet);
 			
-		$replace['#heureDepart0#'] = $heureDepart0->execCmd();
-		$replace['#heureArrivee0#'] = $heureArrivee0->execCmd();
-			$replace['#retard0#'] = '<center class="whiteText">'.$retard0->execCmd().'</center>';
-		}else{
-			$replace['#retard0#'] = '<center class="yellowBoldText">'.$retard0->execCmd().'</center>';
-		}
-		$replace['#heureDepart1#'] = $heureDepart1->execCmd();
-		$replace['#heureArrivee1#'] = $heureArrivee1->execCmd();
-		if($retard1->execCmd() == 'train à l\'heure'){
-			$replace['#retard1#'] = '<center class="whiteText">'.$retard1->execCmd().'</center>';
-		}else{
-			$replace['#retard1#'] = '<center class="yellowBoldText">'.$retard1->execCmd().'</center>';
+			$classForDepartureTime = 'heure ';
+			$classForArrivalTime = 'heure ';
+			$classForDelayedDepartureTime = 'heure ';
+			$classForDelayedArrivalTime = 'heure ';
+			$classForRetard = '';
+			$isDelayed = false;
+
+			if($retard->execCmd() == 'à l\'heure'){
+				$classForDepartureTime .= 'whiteText';
+				$classForArrivalTime .= 'whiteText';
+				$classForRetard = 'whiteText';	
+			}else if($retard == "train supprimé"){
+				$classForDepartureTime .= 'whiteText deleted';
+				$classForArrivalTime .= 'whiteText deleted';
+				$classForRetard = 'redText';	
+			}else{
+				$isDelayed = true;
+				$classForDepartureTime .= 'whiteText deleted';
+				$classForArrivalTime .= 'whiteText deleted';
+				$classForDelayedDepartureTime .= 'redText';
+				$classForDelayedArrivalTime .= 'redText';
+				$classForRetard = 'redText';
+			}
+
+			if($isDelayed){
+				$replace['#heureDepart'.$indexTrajet.'#'] =
+					'<center>'
+					.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</span>'
+					.'<span class="'.$classForDelayedDepartureTime.'">'.$heureDepart->execCmd().'</span>'
+					.'</center>';
+				$replace['#heureArrivee'.$indexTrajet.'#'] =
+					'<center>'
+					.'<span class="'.$classForArrivalTime.'">'.$heureDepart->execCmd().'</span>'
+					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureDepart->execCmd().'</span>'
+					.'</center>';	
+			}else{
+				$replace['#heureDepart'.$indexTrajet.'#'] =
+					'<center class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</center>';
+				$replace['#heureArrivee'.$indexTrajet.'#'] =
+					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
+			}				
+
+			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'">'.$retard->execCmd().'</center>';
 		}		
-		$replace['#heureDepart2#'] = $heureDepart2->execCmd();
-		$replace['#heureArrivee2#'] = $heureArrivee2->execCmd();
-		if($retard2->execCmd() == 'train à l\'heure'){
-			$replace['#retard2#'] = '<center class="whiteText">'.$retard2->execCmd().'</center>';
-		}else{
-			$replace['#retard2#'] = '<center class="yellowBoldText">'.$retard2->execCmd().'</center>';
-		}	
-		$replace['#heureDepart3#'] = $heureDepart3->execCmd();
-		$replace['#heureArrivee3#'] = $heureArrivee3->execCmd();
-		if($retard3->execCmd() == 'train à l\'heure'){
-			$replace['#retard3#'] = '<center class="whiteText">'.$retard3->execCmd().'</center>';
-		}else{
-			$replace['#retard3#'] = '<center class="yellowBoldText">'.$retard3->execCmd().'</center>';
-		}	
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
     }

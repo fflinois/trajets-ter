@@ -31,3 +31,7 @@
     color: yellow;
     font-weight: bold;
 }
+
+.deleted{
+    text-decoration: line-through;
+}
