@@ -14,11 +14,11 @@
     padding: 3px;
 }
 
-.horaires:nth-child(2n+1){
+.horaires:nth-child(2n+0){
     background-color:cornflowerblue ;
 }
 
-.horaires:nth-child(2n+0){
+.horaires:nth-child(2n+1){
     background-color: blue;
 }
 
