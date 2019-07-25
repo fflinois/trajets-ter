@@ -330,18 +330,18 @@ class tter extends eqLogic {
 			if($retard->execCmd() == 'à l\'heure'){
 				$classForDepartureTime .= 'whiteText';
 				$classForArrivalTime .= 'whiteText';
-				$classForRetard = 'class="alert alert-success" role="alert"';
+				$classForRetard = 'onTime';
 			}else if($retard == "supprimé"){
-				$classForDepartureTime .= 'whiteText deleted';
-				$classForArrivalTime .= 'whiteText deleted';
-				$classForRetard = 'class="alert alert-danger" role="alert"';
+				$classForDepartureTime .= 'whiteText deletedText';
+				$classForArrivalTime .= 'whiteText deletedText';
+				$classForRetard = 'delayed';
 			}else{
 				$isDelayed = true;
-				$classForDepartureTime .= 'whiteText deleted';
-				$classForArrivalTime .= 'whiteText deleted';
+				$classForDepartureTime .= 'whiteText deletedText';
+				$classForArrivalTime .= 'whiteText deletedText';
 				$classForDelayedDepartureTime .= 'redText';
 				$classForDelayedArrivalTime .= 'redText';
-				$classForRetard = 'class="alert alert-warning" role="alert"';
+				$classForRetard = 'deleted';
 			}
 
 			if($isDelayed){
@@ -362,7 +362,7 @@ class tter extends eqLogic {
 					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
 			}				
 			
-			$replace['#retard'.$indexTrajet.'#'] = '<center '.$classForRetard.'">'.$retard->execCmd().'</center>';
+			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'"><di>'.$retard->execCmd().'</div></center>';
 			
 		}		
 		$version = jeedom::versionAlias($_version);

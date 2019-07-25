@@ -32,6 +32,30 @@
     font-weight: bold;
 }
 
-.deleted{
+.deletedText{
     text-decoration: line-through;
+}
+
+.onTime{
+    padding: 3px;
+    border: 1px solid green;
+    color: green;
+    background-color: #62d8b1 !important;
+    border-radius: 2px;
+}
+
+.deleted{
+    padding: 3px;
+    border: 1px solid red;
+    color: red;
+    background-color: #e74c4c !important;
+    border-radius: 2px;
+}
+
+.delayed{
+    padding: 3px;
+    border: 1px solid yellow;
+    color: yellow;
+    background-color: #f1f1be !important;
+    border-radius: 2px;
 }
