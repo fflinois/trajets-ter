@@ -347,12 +347,12 @@ class tter extends eqLogic {
 			if($isDelayed){
 				$replace['#heureDepart'.$indexTrajet.'#'] =
 					'<center>'
-					.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</span>'
+					.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().' </span>'
 					.'<span class="'.$classForDelayedDepartureTime.'">'.$heureDepart->execCmd().'</span>'
 					.'</center>';
 				$replace['#heureArrivee'.$indexTrajet.'#'] =
 					'<center>'
-					.'<span class="'.$classForArrivalTime.'">'.$heureDepart->execCmd().'</span>'
+					.'<span class="'.$classForArrivalTime.'">'.$heureDepart->execCmd().' </span>'
 					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureDepart->execCmd().'</span>'
 					.'</center>';	
 			}else{
