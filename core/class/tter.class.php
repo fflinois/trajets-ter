@@ -24,9 +24,6 @@ require_once dirname(__FILE__).'/../../../tter/3rdparty/SncfApi.php';
 class tter extends eqLogic {
     /*     * *************************Attributs****************************** */
 
-	public static $_widgetPossibility = array('custom' => true); // c'est cette ligne qu'il faut ajouter
-
-
 
     /*     * ***********************Methode static*************************** */
 
@@ -362,7 +359,7 @@ class tter extends eqLogic {
 					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
 			}				
 			
-			$replace['#retard'.$indexTrajet.'#'] = '<center class="'.$classForRetard.'"><div>'.$retard->execCmd().'</div></center>';
+			$replace['#retard'.$indexTrajet.'#'] = '<center class="sticker '.$classForRetard.'"><div>'.$retard->execCmd().'</div></center>';
 			
 		}		
 		$version = jeedom::versionAlias($_version);
@@ -387,7 +384,7 @@ class tter extends eqLogic {
 
 class tterCmd extends cmd {
     /*     * *************************Attributs****************************** */
-
+	public static $_widgetPossibility = array('custom' => false);
 
     /*     * ***********************Methode static*************************** */
 

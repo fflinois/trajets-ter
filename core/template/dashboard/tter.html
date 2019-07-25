@@ -5,7 +5,7 @@
     <span class="cmd refresh pull-right cursor" style="margin-top: 2px;margin-right: 2px;">
         <i class="fa fa-refresh"></i>
     </span>
-    <span class="cmd cmd-widget" data-cmd_id="#refresh#" style="display:none;"></span>
+    <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
     <center class="widget-name">
         <strong>
             <a href="#eqLink#" style="font-size : 1.1em;#hideEqLogicName#">
@@ -18,7 +18,9 @@
     </center>
     <div class='container'>
         <div class='row gares'>
-            <div class='col-md-12'><center class='gare whiteBoldText'>#depart# <span class="glyphicon glyphicon-arrow-right"></span>#arrivee#</center></div>
+            <div class='col-md-12'>
+                <center class='gare whiteBoldText'>#depart# <span class="glyphicon glyphicon-arrow-right"></span>#arrivee#</center>
+            </div>
         </div>
         <div class='row horaires'>
             <div class='col-md-4'>#retard0#</div>
@@ -43,7 +45,8 @@
     </div>
     <script>
     $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
-         jeedom.cmd.execute({id: 'refresh'});
+        console.log("appui sur refresh");
+         jeedom.cmd.execute({id: 'refresh_id'});
     });
     </script>    
 </div>

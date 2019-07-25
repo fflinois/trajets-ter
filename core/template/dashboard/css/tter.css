@@ -6,20 +6,17 @@
     width: 390px !important;
 }
 
-.gares{
-    background-color: blue;
-}
 
-.horaires, .onTime, .deleted, .delayed, .heure{
+.horaires, .onTime, .deleted, .delayed, .heure, .gares{
     padding: 3px;
 }
 
 .horaires:nth-child(2n+0){
-    background-color:cornflowerblue ;
+    background-color:#5993ffb6 ;
 }
 
-.horaires:nth-child(2n+1){
-    background-color: blue;
+.horaires:nth-child(2n+1), .gares{
+    background-color: #3b3bff94;
 }
 
 .whiteText{
@@ -40,23 +37,27 @@
     text-decoration: line-through;
 }
 
+.sticker{
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+}
+
 .onTime{
-    border: 1px solid green;
+    border-color: green;
     color: green;
     background-color: #62d8b1 !important;
-    border-radius: 2px;
 }
 
 .deleted{
-    border: 1px solid red;
+    border-color : red;
     color: red;
     background-color: #e74c4c !important;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 .delayed{
-    border: 1px solid yellow;
+    border-color:yellow;
     color: yellow;
     background-color: #f1f1be !important;
-    border-radius: 2px;
 }
