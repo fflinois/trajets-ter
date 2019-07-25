@@ -203,7 +203,8 @@ class tter extends eqLogic {
 		}	
 		
 		log::add('tter','debug','Fin ajout des commandes');
-		
+		$tter = $this->getEqLogic();
+		$tter->refreshData($tter);
     }
 
     public function preUpdate() {
@@ -211,9 +212,7 @@ class tter extends eqLogic {
     }
 
     public function postUpdate() {
-		$this->postSave();
-		$tter = $this->getEqLogic();
-		$tter->refreshData($tter);
+		$this->postSave();		
     }
 
     public function preRemove() {
