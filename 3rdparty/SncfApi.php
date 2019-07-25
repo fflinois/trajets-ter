@@ -67,9 +67,12 @@ class SncfApi {
 
 						if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {
 							$updatedTime = $impactStop['amended_departure_time'];
+							log::add('tter','debug', 'amended departure time : '.$updatedTime);
 							// compute delay
 							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
 							$retard = 'retard de '.$retard;
+							log::add('tter','debug', 'retard : '.$retard);
+
 							if ($retard == 0) {
 								$retard = 'à l\'heure';
 							} elseif ($retard > 1) {
