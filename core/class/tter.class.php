@@ -349,8 +349,8 @@ class tter extends eqLogic {
 					.'</center>';
 				$replace['#heureArrivee'.$indexTrajet.'#'] =
 					'<center>'
-					.'<span class="'.$classForArrivalTime.'">'.$heureDepart->execCmd().' </span>'
-					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureDepart->execCmd().'</span>'
+					.'<span class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().' </span>'
+					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureArrivee->execCmd().'</span>'
 					.'</center>';	
 			}else {
 				$replace['#heureDepart'.$indexTrajet.'#'] =
