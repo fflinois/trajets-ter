@@ -10,14 +10,14 @@ class SncfApi {
    * 
    * @return array tableau de trajets
    */
-	public function getTrajets($apiKey, $depart, $arrivee) {
+	public function getTrajets($apiKey, $depart, $arrivee, $nbrTrajet) {
 		log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
 		date_default_timezone_set("Europe/Paris");
 		$currentDate = date("Ymd\TH:i");
 
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
-			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys=4';
+			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys='.$nbrTrajet;
 			log::add('tter','debug',$finalQuery);
 
 			// Execution de la requete

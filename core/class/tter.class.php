@@ -85,7 +85,9 @@ class tter extends eqLogic {
 
     public function postSave() {
 		log::add('tter','debug','Début ajout des commandes');
-		
+
+		$nbrTrajet = $this->getEqLogic()->getConfiguration('nbrTrajet');
+
 		// Création des commandes de type action		
 		$refresh = $this->getCmd(null, 'refresh');
 		if (!is_object($refresh)) {
@@ -136,7 +138,7 @@ class tter extends eqLogic {
 		// Création des commandes en tableau d'objets
 		$arrayTrajets = [];
 
-		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
+		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
 			$arrayTrajets[$indexTrajet] = array(				
 			  	'heureDepart' => $this->getCmd(null, 'heureDepart'.$indexTrajet),
@@ -237,12 +239,16 @@ class tter extends eqLogic {
 				
 		$depart = $tter->getConfiguration('gareDepart');
 		log::add('tter','debug','gare de depart : '.$depart);
+		
 		$arrivee = $tter->getConfiguration('gareArrivee');
 		log::add('tter','debug','gare d arrivee : '.$arrivee);
 		
+		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
+		log::add('tter','debug','nombre de trajet(s) : '.$nbrTrajet);
+		
 		// appel de l'API SNCF
 		log::add('tter','debug','Appel API SNCF');
-		$trajets = SncfApi::getTrajets($apiKey,$depart,$arrivee);
+		$trajets = SncfApi::getTrajets($apiKey,$depart,$arrivee,$nbrTrajet);
 	
 		// set des infos récuperer
 		$currentDate = strtotime(date("Ymd\TH:i"));
@@ -254,7 +260,7 @@ class tter extends eqLogic {
 		$tter->checkAndUpdateCmd('arrivee', $trajets[0]['gareArrivee']);
 		log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
 		
-		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){	
+		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){	
 			// MàJ du champ heure de départ
 			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']);
 			log::add('tter','debug','set: heureDepart to : '.$trajets[$indexTrajet]['heureDepart']);
@@ -290,7 +296,9 @@ class tter extends eqLogic {
 		$replace['#depart#'] = $depart->execCmd();
 		$replace['#arrivee#'] = $arrivee->execCmd();
 
-		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
+		$nbrTrajet = $this->getEqLogic()->getConfiguration('nbrTrajet');
+
+		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
 			$heureDepart = $this->getCmd(null, 'heureDepart'.$indexTrajet);
 			$heureArrivee = $this->getCmd(null, 'heureArrivee'.$indexTrajet);

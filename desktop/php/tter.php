@@ -110,64 +110,80 @@ include_file('desktop', 'tter', 'css', 'tter');
 					<div class="col-sm-7">
 						<!-- Début du formulaire -->
 						<form class="form-horizontal">
-						<!-- Bloc de champs -->
-						<fieldset>
-							<!-- Container global d'un champ du formulaire -->
-							<div class="form-group">
-								<!-- Label du champ -->
-								<label class="col-sm-6 control-label">{{Nom de l'équipement}}</label>
-								<!-- Container du champ -->
-								<div class="col-sm-6">
-									<!-- Champ contenant l'identifiant caché. Pourquoi pas un hidden ? -->
-									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;"/>
-									<!-- Champ contenant l'information -->
-									<input type="text" class="eqLogicAttr form-control" data-l1key="name"
-									placeholder="{{Nom de l'équipement}}"/>
+							<!-- Bloc de champs -->
+							<fieldset>
+								<!-- Container global d'un champ du formulaire -->
+								<div class="form-group">
+									<!-- Label du champ -->
+									<label class="col-sm-6 control-label">{{Nom de l'équipement}}</label>
+									<!-- Container du champ -->
+									<div class="col-sm-6">
+										<!-- Champ contenant l'identifiant caché. Pourquoi pas un hidden ? -->
+										<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;"/>
+										<!-- Champ contenant l'information -->
+										<input type="text" class="eqLogicAttr form-control" data-l1key="name"
+										placeholder="{{Nom de l'équipement}}"/>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-6 control-label">{{Etat}}</label>
-								<div class="col-sm-6">
-									<!-- Case à cocher activant l'équipement -->
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-									<!-- Case à cocher pour rendre l'élément visible -->
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+								<div class="form-group">
+									<label class="col-sm-6 control-label">{{Etat}}</label>
+									<div class="col-sm-6">
+										<!-- Case à cocher activant l'équipement -->
+										<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+										<!-- Case à cocher pour rendre l'élément visible -->
+										<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-6 control-label" >{{Objet parent}}</label>
-								<div class="col-sm-6">
-									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-										<option value="">{{Aucun}}</option>
-										<?php
-										foreach (object::all() as $object) {
-											echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-										}
-										?>
-									</select>
+								<div class="form-group">
+									<label class="col-sm-6 control-label" >{{Objet parent}}</label>
+									<div class="col-sm-6">
+										<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
+											<option value="">{{Aucun}}</option>
+											<?php
+											foreach (object::all() as $object) {
+												echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+											}
+											?>
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-6 control-label">{{Gare de départ}}</label>
-								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareDepart" placeholder="stop_area:OCE:SA:87611004" />
-									<p class="help-block" style="font-size : 0.8em;">
-										<i class="fa fa-info-circle"></i> Récupérez le champ ID dans le résultat de la requête https://api.sncf.com/v1/coverage/sncf/places?q=#nom_gare_sncf# <br/>
-										avec #nom_gare_sncf# = gare SNCF de départ. Exemple : TOULOUSE-MATABIAU
-									</p>
+								<div class="form-group">
+									<label class="col-sm-6 control-label">{{Gare de départ}}</label>
+									<div class="col-sm-6">
+										<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareDepart" placeholder="stop_area:OCE:SA:87611004" />
+										<p class="help-block" style="font-size : 0.8em;">
+											<i class="fa fa-info-circle"></i> Récupérez le champ ID dans le résultat de la requête https://api.sncf.com/v1/coverage/sncf/places?q=#nom_gare_sncf# <br/>
+											avec #nom_gare_sncf# = gare SNCF de départ. Exemple : TOULOUSE-MATABIAU
+										</p>
+									</div>
+								</div>							
+								<div class="form-group">
+									<label class="col-sm-6 control-label">{{Gare d'arrivée}}</label>
+									<div class="col-sm-6">
+										<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareArrivee" placeholder="stop_area:OCE:SA:87611004" />
+										<p class="help-block" style="font-size : 0.8em;">
+											<i class="fa fa-info-circle"></i> Récupérez le champ ID dans le résultat de la requête https://api.sncf.com/v1/coverage/sncf/places?q=#nom_gare_sncf# <br/>
+											avec #nom_gare_sncf# = gare SNCF de d'arrivée. Exemple : VALENCE-AGEN
+										</p>
+									</div>
+								</div>							
+								<div class="form-group">
+								<label class="col-sm-3 control-label" >{{Nombre de trajet(s) à afficher}}</label>
+									<div class="col-sm-3">
+										<select id="typeEq" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="nbrTrajet">
+											<?php										
+												for ($nbrTrajet = 1; $nbrTrajet <= 10; $nbrTrajet++){
+													if($nbrTrajet == 4){
+														echo '<option value="' . $nbrTrajet . '" selected="selected">' . $nbrTrajet . '</option>';												
+													}else{
+														echo '<option value="' . $nbrTrajet . '">' . $nbrTrajet . '</option>';												
+													}
+												}
+											?>
+										</select>
+									</div>
 								</div>
-							</div>							
-							<div class="form-group">
-								<label class="col-sm-6 control-label">{{Gare d'arrivée}}</label>
-								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="gareArrivee" placeholder="stop_area:OCE:SA:87611004" />
-									<p class="help-block" style="font-size : 0.8em;">
-										<i class="fa fa-info-circle"></i> Récupérez le champ ID dans le résultat de la requête https://api.sncf.com/v1/coverage/sncf/places?q=#nom_gare_sncf# <br/>
-										avec #nom_gare_sncf# = gare SNCF de d'arrivée. Exemple : VALENCE-AGEN
-									</p>
-								</div>
-							</div>
-						</fieldset>
+							</fieldset>
 						</form>
 					</div>
 				</div>
