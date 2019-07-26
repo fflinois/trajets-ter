@@ -92,9 +92,9 @@ class SncfApi {
 				'numeroTrain' => $numeroTrain,
 				'gareDepart' => $gareDepart,
 				'gareArrivee' => $gareArrivee,
-				'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
-				'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
-				'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
+				'heureDepart' => self::convertDateToTimeString($trajet['departure_date_time']),
+				'heureArrivee' => self::convertDateToTimeString($trajet['arrival_date_time']),
+				'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
 				//'heureDepart' => 'test heure depart',
 				//'heureArrivee' => 'test heure arrivee',
 				//'dureeTrajet' => 'test duree trajet',
@@ -112,12 +112,12 @@ class SncfApi {
     return $trajets;
   }
 
-  private function convertDateToTimeString($dateToConvert){
+  public function convertDateToTimeString($dateToConvert){
 	$dateToHhMm = substr($dateToConvert,9,4);
 	return substr($dateToHhMm,0,2)."h".substr($dateToHhMm,2,2);	
   }
 
-  private function convertDurationToTimeString($durationToConvert){
+  public function convertDurationToTimeString($durationToConvert){
 	$durationToConvertToInt = (int)$durationToConvert;
 	$durationInMin = $durationToConvertToInt / 60;
 	$durationToTimeString = '';
