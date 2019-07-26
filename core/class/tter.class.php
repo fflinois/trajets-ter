@@ -84,6 +84,13 @@ class tter extends eqLogic {
     }
 
     public function postSave() {
+
+		log::add('tter','debug','Enable = '.$this->getIsEnable());
+		if($this->getIsEnable() <> 1){
+			$this->setIsEnable(1);
+			log::add('tter','debug','set de Enable à '.$this->getIsEnable());
+		}
+
 		log::add('tter','debug','Début ajout des commandes');		
 		$nbrTrajet = $this->getConfiguration('nbrTrajet');
 
