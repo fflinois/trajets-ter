@@ -331,14 +331,14 @@ class tter extends eqLogic {
 			}else if($retard == "supprimé"){
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
-				$classForRetard = 'delayed';
+				$classForRetard = 'deleted';
 			}else{
 				$isDelayed = true;
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
 				$classForDelayedDepartureTime .= 'redText';
 				$classForDelayedArrivalTime .= 'redText';
-				$classForRetard = 'deleted';
+				$classForRetard = 'delayed';
 			}
 
 			if($isDelayed){
