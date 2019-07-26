@@ -85,8 +85,8 @@ class tter extends eqLogic {
 
     public function postSave() {
 		log::add('tter','debug','Début ajout des commandes');
-
-		$nbrTrajet = $this->getEqLogic()->getConfiguration('nbrTrajet');
+		$tter = $this->getEqLogic();
+		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
 
 		// Création des commandes de type action		
 		$refresh = $this->getCmd(null, 'refresh');
@@ -296,7 +296,8 @@ class tter extends eqLogic {
 		$replace['#depart#'] = $depart->execCmd();
 		$replace['#arrivee#'] = $arrivee->execCmd();
 
-		$nbrTrajet = $this->getEqLogic()->getConfiguration('nbrTrajet');
+		$tter = $this->getEqLogic();
+		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
 
 		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
