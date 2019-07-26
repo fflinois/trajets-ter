@@ -84,9 +84,8 @@ class tter extends eqLogic {
     }
 
     public function postSave() {
-		log::add('tter','debug','Début ajout des commandes');
-		$tter = $this->getEqLogic();
-		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
+		log::add('tter','debug','Début ajout des commandes');		
+		$nbrTrajet = $this->getConfiguration('nbrTrajet');
 
 		// Création des commandes de type action		
 		$refresh = $this->getCmd(null, 'refresh');
@@ -243,7 +242,7 @@ class tter extends eqLogic {
 		$arrivee = $tter->getConfiguration('gareArrivee');
 		log::add('tter','debug','gare d arrivee : '.$arrivee);
 		
-		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
+		$nbrTrajet = $this->getConfiguration('nbrTrajet');
 		log::add('tter','debug','nombre de trajet(s) : '.$nbrTrajet);
 		
 		// appel de l'API SNCF
@@ -296,8 +295,7 @@ class tter extends eqLogic {
 		$replace['#depart#'] = $depart->execCmd();
 		$replace['#arrivee#'] = $arrivee->execCmd();
 
-		$tter = $this->getEqLogic();
-		$nbrTrajet = $tter->getConfiguration('nbrTrajet');
+		$nbrTrajet = $this->getConfiguration('nbrTrajet');
 
 		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
