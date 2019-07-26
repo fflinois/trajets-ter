@@ -92,12 +92,12 @@ class SncfApi {
 				'numeroTrain' => $numeroTrain,
 				'gareDepart' => $gareDepart,
 				'gareArrivee' => $gareArrivee,
-				//'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
-				//'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
-				//'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
-				'heureDepart' => 'test heure depart',
-				'heureArrivee' => 'test heure arrivee',
-				'dureeTrajet' => 'test duree trajet',
+				'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
+				'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
+				'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
+				//'heureDepart' => 'test heure depart',
+				//'heureArrivee' => 'test heure arrivee',
+				//'dureeTrajet' => 'test duree trajet',
 				'retard' => $retard,
 				'updatedheureDepart' => $updatedTime
 				);
@@ -111,7 +111,7 @@ class SncfApi {
     }
     return $trajets;
   }
-/*
+
   private function convertDateToTimeString($dateToConvert){
 	$dateToHhMm = substr($dateToConvert,9,4);
 	return substr($dateToHhMm,0,2)."h".substr($dateToHhMm,2,2);	
@@ -129,7 +129,7 @@ class SncfApi {
 		$durationToTimeString = $durationInMin.'min';
 	}
 	return $durationToTimeString;	
-  }*/
+  }
 
 }
 
