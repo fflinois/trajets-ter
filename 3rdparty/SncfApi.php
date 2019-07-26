@@ -95,19 +95,18 @@ class SncfApi {
 				'heureDepart' => self::convertDateToTimeString($trajet['departure_date_time']),
 				'heureArrivee' => self::convertDateToTimeString($trajet['arrival_date_time']),
 				'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
-				//'heureDepart' => 'test heure depart',
-				//'heureArrivee' => 'test heure arrivee',
-				//'dureeTrajet' => 'test duree trajet',
 				'retard' => $retard,
 				'updatedheureDepart' => $updatedTime
-				);
-			log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
-      log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
-      log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
-      log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
-      log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
-      log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
-			$indexTrajet++;
+			);
+
+		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
+      	log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
+      	log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
+	  	log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
+	  	log::add('tter','debug','heureArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureArrivee']);
+      	log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
+      	log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
+		$indexTrajet++;
     }
     return $trajets;
   }
@@ -126,7 +125,7 @@ class SncfApi {
 		$minsDuration = $durationToConvertToInt / 60 - $hoursDuration * 60 ;
 		$durationToTimeString = $hoursDuration.'h'.$minsDuration;
 	}else{
-		$durationToTimeString = $durationInMin.'min';
+		$durationToTimeString = $durationInMin.' min';
 	}
 	return $durationToTimeString;	
   }

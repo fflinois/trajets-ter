@@ -248,12 +248,12 @@ class tter extends eqLogic {
 		$currentDate = strtotime(date("Ymd\TH:i"));
 		// mise à jour des infos gare départ et arrivée
 		// départ
-		/*$tter->checkAndUpdateCmd('depart', $trajets[0]['gareDepart']);
+		$tter->checkAndUpdateCmd('depart', $trajets[0]['gareDepart']);
 		log::add('tter','debug','set: depart to : '.$trajets[0]['gareDepart']);
 		// arrivée
 		$tter->checkAndUpdateCmd('arrivee', $trajets[0]['gareArrivee']);
 		log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
-
+		/*
 		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){	
 			// MàJ du champ heure de départ
 			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']));
