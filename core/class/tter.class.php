@@ -253,24 +253,24 @@ class tter extends eqLogic {
 		// arrivée
 		$tter->checkAndUpdateCmd('arrivee', $trajets[0]['gareArrivee']);
 		log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
-		/*
+		
 		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){	
 			// MàJ du champ heure de départ
-			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']));
+			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']);
 			log::add('tter','debug','set: heureDepart to : '.$trajets[$indexTrajet]['heureDepart']);
 						
 			// MàJ du champ heure d'arrivée
-			$tter->checkAndUpdateCmd('heureArrivee'.$indexTrajet, $trajets[$indexTrajet]['heureArrivee']));
+			$tter->checkAndUpdateCmd('heureArrivee'.$indexTrajet, $trajets[$indexTrajet]['heureArrivee']);
 			log::add('tter','debug','set: heureArrivee to : '.$trajets[$indexTrajet]['heureArrivee']);
 
 			// MàJ du champ retard
-			$tter->checkAndUpdateCmd('retard'.$indexTrajet, $trajets[$indexTrajet]['retard']));
+			$tter->checkAndUpdateCmd('retard'.$indexTrajet, $trajets[$indexTrajet]['retard']);
 			log::add('tter','debug','set: retard to : '.$trajets[$indexTrajet]['retard']);
 
 			// MàJ du champ dureeTrajet
-			$tter->checkAndUpdateCmd('dureeTrajet'.$indexTrajet, $trajets[$indexTrajet]['dureeTrajet']));
+			$tter->checkAndUpdateCmd('dureeTrajet'.$indexTrajet, $trajets[$indexTrajet]['dureeTrajet']);
 			log::add('tter','debug','set: dureeTrajet to : '.$trajets[$indexTrajet]['dureeTrajet']);
-		}*/
+		}
 	}
 
 
