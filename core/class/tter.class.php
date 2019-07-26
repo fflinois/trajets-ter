@@ -322,13 +322,12 @@ class tter extends eqLogic {
 			$classForDelayedArrivalTime = 'heure ';
 			$classForRetard = '';
 			$isDelayed = false;
-			$isDeleted = false;
 
 			if($retard->execCmd() == 'à l\'heure'){
 				$classForDepartureTime .= 'whiteText';
 				$classForArrivalTime .= 'whiteText';
 				$classForRetard = 'onTime';
-			}else if($retard == 'supprimé'){
+			}else if($retard->execCmd() == 'supprimé'){
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
 				$classForRetard = 'deleted';
