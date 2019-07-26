@@ -168,16 +168,12 @@ include_file('desktop', 'tter', 'css', 'tter');
 									</div>
 								</div>							
 								<div class="form-group">
-								<label class="col-sm-3 control-label" >{{Nombre de trajet(s) à afficher}}</label>
-									<div class="col-sm-3">
+								<label class="col-sm-6 control-label" >{{Nombre de trajet(s) à afficher}}</label>
+									<div class="col-sm-6">
 										<select id="typeEq" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="nbrTrajet">
 											<?php										
 												for ($nbrTrajet = 1; $nbrTrajet <= 10; $nbrTrajet++){
-													if($nbrTrajet == 4){
-														echo '<option value="' . $nbrTrajet . '" selected="selected">' . $nbrTrajet . '</option>';												
-													}else{
-														echo '<option value="' . $nbrTrajet . '">' . $nbrTrajet . '</option>';												
-													}
+													echo '<option value="' . $nbrTrajet . '">' . $nbrTrajet . '</option>';
 												}
 											?>
 										</select>
