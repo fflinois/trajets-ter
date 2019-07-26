@@ -39,7 +39,6 @@ class SncfApi {
 			$heureDepart = substr($dateTimeDepart,9,4);
 			$dateTimeArrivee = $trajet['arrival_date_time'];
 			$heureArrivee = substr($dateTimeArrivee,9,4);
-			$dureeTrajet = gmdate("Hi", strtotime($dateTimeArrivee)-strtotime($dateTimeDepart));
 			$numeroTrain = $trajet['sections'][1]['display_informations']['headsign'];
 			$gareDepart = $trajet['sections'][1]['from']['stop_point']['name'];
 			$gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
@@ -93,11 +92,9 @@ class SncfApi {
 				'numeroTrain' => $numeroTrain,
 				'gareDepart' => $gareDepart,
 				'gareArrivee' => $gareArrivee,
-				'dateTimeDepart' => $dateTimeDepart,
-				'heureDepart' => $heureDepart,
-				'dateTimeArrivee' => $dateTimeArrivee,
-				'heureArrivee' => $heureArrivee,
-				'dureeTrajet' => $dureeTrajet,
+				'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
+				'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
+				'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
 				'retard' => $retard,
 				'updatedheureDepart' => $updatedTime
 				);
@@ -111,6 +108,26 @@ class SncfApi {
     }
     return $trajets;
   }
+
+  private function convertDateToTimeString($dateToConvert){
+	$dateToHhMm = substr($dateToConvert,9,4);
+	return substr($dateToHhMm,0,2)."h".substr($dateToHhMm,2,2);	
+  }
+
+  private function convertDurationToTimeString($durationToConvert){
+	$durationToConvertToInt = (int)$durationToConvert;
+	$durationInMin = $durationToConvertToInt / 60;
+	$durationToTimeString = '';
+	if($durationInMin > 59){
+		$hoursDuration = $durationInMin / 60;
+		$minsDuration = $durationToConvertToInt / 60 - $hoursDuration * 60 ;
+		$durationToTimeString = $hoursDuration.'h'.$minsDuration;
+	}else{
+		$durationToTimeString = $durationInMin.'min';
+	}
+	return $durationToTimeString;	
+  }
+
 }
 
 

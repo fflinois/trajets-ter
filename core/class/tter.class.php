@@ -49,7 +49,13 @@ class tter extends eqLogic {
       }
      */
 
+	  /*
 	public static function cron15($_eqlogic_id = null, $from=__FUNCTION__) {
+		
+	}
+	*/
+
+	public static function cron5($_eqlogic_id = null, $from=__FUNCTION__) {
 		foreach (self::byType('tter') as $tter) {//parcours tous les équipements du plugin tter
 			if ($tter->getIsEnable() == 1) {//vérifie que l'équipement est actif
 				$refresh = $tter->getCmd(null, 'refresh');//retourne la commande "refresh si elle exxiste
@@ -240,54 +246,30 @@ class tter extends eqLogic {
 	
 		// set des infos récuperer
 		$currentDate = strtotime(date("Ymd\TH:i"));
-		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){
-			$heureDepart = date('Hi',strtotime($trajets[$indexTrajet]['heureDepart']));
-			$heureArrivee = date('Hi',strtotime($trajets[$indexTrajet]['heureArrivee']));
+		// mise à jour des infos gare départ et arrivée
+		// départ
+		$tter->checkAndUpdateCmd('depart', $trajets[0]['gareDepart']);
+		log::add('tter','debug','set: depart to : '.$trajets[0]['gareDepart']);
+		// arrivée
+		$tter->checkAndUpdateCmd('arrivee', $trajets[0]['gareArrivee']);
+		log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
 
-			// update widget info
-			foreach ($tter->getCmd('info') as $cmd) {
+		for ($indexTrajet = 0; $indexTrajet <= 3; $indexTrajet++){	
+			// MàJ du champ heure de départ
+			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']));
+			log::add('tter','debug','set: heureDepart to : '.$trajets[$indexTrajet]['heureDepart']);
+						
+			// MàJ du champ heure d'arrivée
+			$tter->checkAndUpdateCmd('heureArrivee'.$indexTrajet, $trajets[$indexTrajet]['heureArrivee']));
+			log::add('tter','debug','set: heureArrivee to : '.$trajets[$indexTrajet]['heureArrivee']);
 
-				switch ($cmd->getLogicalId()) {
-				  
-					case 'retard'.$indexTrajet:
-						$cmd->setCollectDate('');
-						$value = $trajets[$indexTrajet]['retard'];
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '.$value);
-						break;
-					case 'dureeTrajet'.$indexTrajet:
-						$cmd->setCollectDate('');
-						$value = substr($trajets[$indexTrajet]['dureeTrajet'],0,2)."h".substr($trajets[$indexTrajet]['dureeTrajet'],2,2);
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '.$value);
-						break;
-					case 'heureArrivee'.$indexTrajet:
-						$cmd->setCollectDate('');
-						$value = substr($heureArrivee,0,2)."h".substr($heureArrivee,2,2);
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
-						break;
-					case 'heureDepart'.$indexTrajet:
-						$cmd->setCollectDate('');
-						$value = substr($heureDepart,0,2)."h".substr($heureDepart,2,2);
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
-						break;
-					case 'arrivee':
-						$cmd->setCollectDate('');
-						$value = $trajets[$indexTrajet]['gareArrivee'];
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
-        				break;
-					case 'depart':
-						$cmd->setCollectDate('');
-						$value = $trajets[$indexTrajet]['gareDepart'];
-						$cmd->event($value);
-						log::add('tter','debug','set:'.$cmd->getLogicalId().' to '. $value);
-       					break;
-				}
-			
-			}
+			// MàJ du champ retard
+			$tter->checkAndUpdateCmd('retard'.$indexTrajet, $trajets[$indexTrajet]['retard']));
+			log::add('tter','debug','set: retard to : '.$trajets[$indexTrajet]['retard']);
+
+			// MàJ du champ dureeTrajet
+			$tter->checkAndUpdateCmd('dureeTrajet'.$indexTrajet, $trajets[$indexTrajet]['dureeTrajet']));
+			log::add('tter','debug','set: dureeTrajet to : '.$trajets[$indexTrajet]['dureeTrajet']);
 		}
 	}
 

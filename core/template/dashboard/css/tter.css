@@ -51,8 +51,8 @@
 
 .deleted{
     font-weight: bold;
-    border-color : red;
-    color: red;
+    border-color : #b30000;
+    color: #b30000;
     background-color: #de7777 !important;
 }
 
