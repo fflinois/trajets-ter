@@ -324,14 +324,17 @@ class tter extends eqLogic {
 			$isDelayed = false;
 
 			if($retard->execCmd() == 'à l\'heure'){
+				log::add('tter','debug','train onTime');
 				$classForDepartureTime .= 'whiteText';
 				$classForArrivalTime .= 'whiteText';
 				$classForRetard = 'onTime';
 			}elseif($retard->execCmd() == 'supprimé'){
+				log::add('tter','debug','train deleted');
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
 				$classForRetard = 'deleted';
 			}else{
+				log::add('tter','debug','train delayed');
 				$isDelayed = true;
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
