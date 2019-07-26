@@ -111,7 +111,7 @@ class SncfApi {
     }
     return $trajets;
   }
-
+/*
   private function convertDateToTimeString($dateToConvert){
 	$dateToHhMm = substr($dateToConvert,9,4);
 	return substr($dateToHhMm,0,2)."h".substr($dateToHhMm,2,2);	
@@ -129,7 +129,7 @@ class SncfApi {
 		$durationToTimeString = $durationInMin.'min';
 	}
 	return $durationToTimeString;	
-  }
+  }*/
 
 }
 
