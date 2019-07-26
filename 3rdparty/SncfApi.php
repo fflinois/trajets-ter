@@ -92,9 +92,12 @@ class SncfApi {
 				'numeroTrain' => $numeroTrain,
 				'gareDepart' => $gareDepart,
 				'gareArrivee' => $gareArrivee,
-				'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
-				'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
-				'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
+				//'heureDepart' => $this->convertDateToTimeString($trajet['departure_date_time']),
+				//'heureArrivee' => $this->convertDateToTimeString($trajet['arrival_date_time']),
+				//'dureeTrajet' => $this->convertDurationToTimeString($trajet['duration']),
+				'heureDepart' => 'test heure depart',
+				'heureArrivee' => 'test heure arrivee',
+				'dureeTrajet' => 'test duree trajet',
 				'retard' => $retard,
 				'updatedheureDepart' => $updatedTime
 				);
