@@ -143,6 +143,7 @@ class tter extends eqLogic {
 
 		// Création des commandes en tableau d'objets
 		$arrayTrajets = [];
+		$nbrFieldInFor = 6; // nombre de champ dans la boucle for
 
 		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
@@ -157,7 +158,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepart'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureDepart']->setLogicalId('heureDepart'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(4+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureDepart']->setOrder(4+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['heureDepart']->setName(__('Heure départ train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureDepart'.$indexTrajet);
 			}
@@ -172,7 +173,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureArrivee'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setLogicalId('heureArrivee'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(5+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureArrivee']->setOrder(5+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['heureArrivee']->setName(__('Heure arrivée train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureArrivee'.$indexTrajet);
 			}
@@ -187,7 +188,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepartRetard'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setLogicalId('heureDepartRetard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setOrder(4+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setOrder(6+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setName(__('Heure départ retardé train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureDepartRetard'.$indexTrajet);
 			}
@@ -202,7 +203,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureArriveeRetard'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setLogicalId('heureArriveeRetard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setOrder(5+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setOrder(7+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setName(__('Heure arrivée retardée train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureArriveeRetard'.$indexTrajet);
 			}
@@ -217,7 +218,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['dureeTrajet'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setLogicalId('dureeTrajet'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(6+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['dureeTrajet']->setOrder(8+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['dureeTrajet']->setName(__('Temps de trajet train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : dureeTrajet'.$indexTrajet);
 			}
@@ -232,7 +233,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['retard'] = new tterCmd();
 				$arrayTrajets[$indexTrajet]['retard']->setLogicalId('retard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['retard']->setIsVisible(1);
-				$arrayTrajets[$indexTrajet]['retard']->setOrder(7+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['retard']->setOrder(9+$indexTrajet*6);
 				$arrayTrajets[$indexTrajet]['retard']->setName(__('Retard train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : retard'.$indexTrajet);
 			}
