@@ -94,7 +94,8 @@ class SncfApi {
 				'heureArrivee' => self::convertDateToTimeString($trajet['arrival_date_time']),
 				'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
 				'retard' => $retard,
-				'updatedheureDepart' => $updatedTime
+				'delayedDepartureTime' => $delayedDepartureTime,
+				'delayedArrivalTime' => $delayedArrivalTime
 			);
 
 		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);

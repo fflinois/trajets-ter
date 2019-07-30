@@ -182,6 +182,36 @@ class tter extends eqLogic {
 			$arrayTrajets[$indexTrajet]['heureArrivee']->setEqLogic_id($this->getId());
 			$arrayTrajets[$indexTrajet]['heureArrivee']->save();
 
+			// Création de la commande heureDepartRetard
+			if (!is_object($arrayTrajets[$indexTrajet]['heureDepartRetard'])) {
+				$arrayTrajets[$indexTrajet]['heureDepartRetard'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setLogicalId('heureDepartRetard'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setOrder(4+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setName(__('Heure départ retardé train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : heureDepartRetard'.$indexTrajet);
+			}
+			$arrayTrajets[$indexTrajet]['heureDepartRetard']->setType('info');
+			$arrayTrajets[$indexTrajet]['heureDepartRetard']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['heureDepartRetard']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['heureDepartRetard']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['heureDepartRetard']->save();
+
+			// Création de la commande heureArriveeRetard
+			if (!is_object($arrayTrajets[$indexTrajet]['heureArriveeRetard'])) {
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard'] = new tterCmd();
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setLogicalId('heureArriveeRetard'.$indexTrajet);
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setIsVisible(1);
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setOrder(5+$indexTrajet*4);
+				$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setName(__('Heure arrivée retardée train '.$indexTrajet, __FILE__));
+				log::add('tter','debug','Ajout commande : heureArriveeRetard'.$indexTrajet);
+			}
+			$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setType('info');
+			$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setSubType('string');
+			$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setEventOnly(1);
+			$arrayTrajets[$indexTrajet]['heureArriveeRetard']->setEqLogic_id($this->getId());
+			$arrayTrajets[$indexTrajet]['heureArriveeRetard']->save();
+
 			// Création de la commande dureeTrajet
 			if (!is_object($arrayTrajets[$indexTrajet]['dureeTrajet'])) {
 				$arrayTrajets[$indexTrajet]['dureeTrajet'] = new tterCmd();
@@ -275,6 +305,14 @@ class tter extends eqLogic {
 			$tter->checkAndUpdateCmd('heureArrivee'.$indexTrajet, $trajets[$indexTrajet]['heureArrivee']);
 			log::add('tter','debug','set: heureArrivee to : '.$trajets[$indexTrajet]['heureArrivee']);
 
+			// MàJ du champ heure de départ avec retard
+			$tter->checkAndUpdateCmd('heureDepartRetard'.$indexTrajet, $trajets[$indexTrajet]['delayedDepartureTime']);
+			log::add('tter','debug','set: heureDepartRetard to : '.$trajets[$indexTrajet]['delayedDepartureTime']);
+						
+			// MàJ du champ heure d'arrivée avec retard
+			$tter->checkAndUpdateCmd('heureArriveeRetard'.$indexTrajet, $trajets[$indexTrajet]['delayedArrivalTime']);
+			log::add('tter','debug','set: heureArriveeRetard to : '.$trajets[$indexTrajet]['delayedArrivalTime']);
+
 			// MàJ du champ retard
 			$tter->checkAndUpdateCmd('retard'.$indexTrajet, $trajets[$indexTrajet]['retard']);
 			log::add('tter','debug','set: retard to : '.$trajets[$indexTrajet]['retard']);
@@ -317,6 +355,7 @@ class tter extends eqLogic {
 			$classForDelayedDepartureTime = 'heure ';
 			$classForDelayedArrivalTime = 'heure ';
 			$classForRetard = '';
+			$popoverforDelayed = '';
 			$isDelayed = false;
 
 			if($retard->execCmd() == 'à l\'heure'){
@@ -329,6 +368,7 @@ class tter extends eqLogic {
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
 				$classForRetard = 'deleted';
+				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train supprimé"';
 			}else{
 				log::add('tter','debug','train delayed');
 				$isDelayed = true;
@@ -337,6 +377,7 @@ class tter extends eqLogic {
 				$classForDelayedDepartureTime .= 'redText';
 				$classForDelayedArrivalTime .= 'redText';
 				$classForRetard = 'delayed';
+				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train retardé"';
 			}
 
 			if($isDelayed){
@@ -357,7 +398,7 @@ class tter extends eqLogic {
 					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
 			}				
 			
-			$replace['#retard'.$indexTrajet.'#'] = '<center class="sticker '.$classForRetard.'"><div>'.$retard->execCmd().'</div></center>';
+			$replace['#retard'.$indexTrajet.'#'] = '<center class="sticker '.$classForRetard.' '.$popoverforDelayed.'"><div>'.$retard->execCmd().'</div></center>';
 			
 		}		
 		$version = jeedom::versionAlias($_version);

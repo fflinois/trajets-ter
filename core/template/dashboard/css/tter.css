@@ -42,9 +42,9 @@
 }
 
 .sticker{
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
 .onTime{
