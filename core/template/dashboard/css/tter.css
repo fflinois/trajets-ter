@@ -11,6 +11,10 @@
     padding: 3px;
 }
 
+.retard{
+    padding: 0px !important;
+}
+
 .horaires:nth-child(2n+0){
     background-color:#5993ffb6 ;
 }
@@ -60,5 +64,5 @@
     font-weight: bold;
     border-color:yellow;
     color: yellow;
-    background-color: #e0e0c6 !important;
+    background-color: #ffff005e !important;
 }
