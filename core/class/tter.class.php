@@ -385,7 +385,7 @@ class tter extends eqLogic {
 				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train retardé"';
 			}
 
-			$horaires = 
+			$horaires .= 
 				'<div class="row horaires">'
 					.'<div class="col-md-4 retard">'
 						.'<center class="sticker '.$classForRetard.' '.$popoverforDelayed.'">'
