@@ -150,7 +150,9 @@ class tter extends eqLogic {
 			$arrayTrajets[$indexTrajet] = array(				
 			  	'heureDepart' => $this->getCmd(null, 'heureDepart'.$indexTrajet),
 			  	'heureArrivee' => $this->getCmd(null, 'heureArrivee'.$indexTrajet),
-			  	'dureeTrajet' => $this->getCmd(null, 'dureeTrajet'.$indexTrajet),
+			  	'heureDepartRetard' => $this->getCmd(null, 'heureDepartRetard'.$indexTrajet),
+				'heureArriveeRetard' => $this->getCmd(null, 'heureArriveeRetard'.$indexTrajet),
+				'dureeTrajet' => $this->getCmd(null, 'dureeTrajet'.$indexTrajet),
 			  	'retard' => $this->getCmd(null, 'retard'.$indexTrajet)
 			);
 			// Création de la commande heureDepart
@@ -189,7 +191,7 @@ class tter extends eqLogic {
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setLogicalId('heureDepartRetard'.$indexTrajet);
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setIsVisible(1);
 				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setOrder(6+$indexTrajet*6);
-				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setName(__('Heure départ retardé train '.$indexTrajet, __FILE__));
+				$arrayTrajets[$indexTrajet]['heureDepartRetard']->setName(__('Heure départ retardée train '.$indexTrajet, __FILE__));
 				log::add('tter','debug','Ajout commande : heureDepartRetard'.$indexTrajet);
 			}
 			$arrayTrajets[$indexTrajet]['heureDepartRetard']->setType('info');
