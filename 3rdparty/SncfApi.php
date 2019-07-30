@@ -72,10 +72,8 @@ class SncfApi {
 							
 							if ($retard == 0) {
 								$retard = 'à l\'heure';
-							} else if ($retard > 1) {
-								$retard = 'retard de '.$retard.' minutes';
 							} else {
-								$retard = 'retard de '.$retard.' minute';
+								$retard = 'retard '.$retard.' min.';
 							}
 							break;
 
