@@ -342,6 +342,8 @@ class tter extends eqLogic {
 
 		$nbrTrajet = $this->getConfiguration('nbrTrajet');
 
+		$horaires = '';
+
 		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){
 
 			$heureDepart = $this->getCmd(null, 'heureDepart'.$indexTrajet);
@@ -380,27 +382,42 @@ class tter extends eqLogic {
 				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train retardé"';
 			}
 
+			$horaires = 
+				'<div class="row horaires">'
+					.'<div class="col-md-4 retard">'
+						.'<center class="sticker '.$classForRetard.' '.$popoverforDelayed.'">'
+							.'<div>'.$retard->execCmd().'</div>'
+						.'</center>'
+					.'</div>'
+					.'<div class="col-md-4">';
+
 			if($isDelayed){
-				$replace['#heureDepart'.$indexTrajet.'#'] =
-					'<center>'
-					.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().' </span>'
-					.'<span class="'.$classForDelayedDepartureTime.'">'.$heureDepart->execCmd().'</span>'
-					.'</center>';
-				$replace['#heureArrivee'.$indexTrajet.'#'] =
-					'<center>'
-					.'<span class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().' </span>'
-					.'<span class="'.$classForDelayedArrivalTime.'">'.$heureArrivee->execCmd().'</span>'
-					.'</center>';	
+				$horaires .=
+						'<center>'
+							.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().' </span>'
+							.'<span class="'.$classForDelayedDepartureTime.'">'.$heureDepart->execCmd().'</span>'
+						.'</center>'
+					.'</div>'
+					.'<div class="col-md-4">'
+						.'<center>'
+							.'<span class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().' </span>'
+							.'<span class="'.$classForDelayedArrivalTime.'">'.$heureArrivee->execCmd().'</span>'
+						.'</center>'
+					.'</div>';	
 			}else {
-				$replace['#heureDepart'.$indexTrajet.'#'] =
-					'<center class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</center>';
-				$replace['#heureArrivee'.$indexTrajet.'#'] =
-					'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>';
-			}				
+				$horaires .=
+						'<center class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</center>'
+					.'</div>'
+					.'<div class="col-md-4">'
+						.'<center class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().'</center>'
+					.'</div>'
+				.'</div>';
+			}
 			
-			$replace['#retard'.$indexTrajet.'#'] = '<center class="sticker '.$classForRetard.' '.$popoverforDelayed.'"><div>'.$retard->execCmd().'</div></center>';
-			
-		}		
+		}	
+
+		$replace['#horaires#'] = $horaires;
+				
 		$version = jeedom::versionAlias($_version);
 		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'tter', 'tter')));//  retourne notre template qui se nomme eqlogic pour le widget	  
     }
