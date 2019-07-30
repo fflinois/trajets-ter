@@ -70,16 +70,17 @@ class SncfApi {
 							// compute delay
 							$retard = ( substr($updatedTime,0,2) * 60 + substr($updatedTime,2,2) ) - ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
 							$retard = 'retard de '.$retard;
-							log::add('tter','debug', 'retard : '.$retard);
-
+							
 							if ($retard == 0) {
 								$retard = 'à l\'heure';
 							} elseif ($retard > 1) {
-								$retard .= ' minutes';
+								$retard = 'retard de '.$retard.' minutes';
 							} else {
-								$retard .= ' minute';
+								$retard = 'retard de '.$retard.' minute';
 							}
 							break;
+
+							log::add('tter','debug', 'retard : '.$retard);
 						}
 					}
 					break;
