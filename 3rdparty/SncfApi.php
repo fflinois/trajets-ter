@@ -64,9 +64,19 @@ class SncfApi {
 					foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
 						log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
 
-						if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {
+						if($trajet['sections'][1]['from']['id'] == $impactStop['id']){
+							log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
+						}
+
+						if($trajet['sections'][1]['to']['id'] == $impactStop['id']){
+							log::add('tter','debug', '######## TEST COMPARAISON ID ARRIVAL #######');
+						}
+
+						if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {							
+
 							$delayedDepartureTime = $impactStop['amended_departure_time'];
-							log::add('tter','debug', 'amended departure time : '.$updatedTime);
+							$causeOfDelayed = $impactStop['cause'];
+							log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
 							// compute delay
 							$retard = 
 								( substr($delayedDepartureTime,0,2) * 60 + substr($delayedDepartureTime,2,2) ) 
@@ -96,8 +106,9 @@ class SncfApi {
 				'heureArrivee' => self::convertDateToTimeString($trajet['arrival_date_time']),
 				'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
 				'retard' => $retard,
+				'causeOfDelayed' => $causeOfDelayed,
 				'delayedDepartureTime' => $delayedDepartureTime,
-				'delayedArrivalTime' => $delayedArrivalTime
+				'delayedArrivalTime' => $delayedArrivalTime,
 			);
 
 		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
