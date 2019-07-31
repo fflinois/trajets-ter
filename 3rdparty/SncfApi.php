@@ -58,41 +58,40 @@ class SncfApi {
 				$disruptions = $responseJSON['disruptions'];
 				foreach($disruptions as $disruption) {
 					if ( $disruption['disruption_id']== $numdisrup ) {
-					log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
-					log::add('tter','debug','Search for impacted departure '.$heureDepart);
-					// go through each impacted stops
-					foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
-						log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
+						log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
+						log::add('tter','debug','Search for impacted departure '.$heureDepart);
+						// go through each impacted stops
+						foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
+							log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
 
-						if($trajet['sections'][1]['from']['id'] == $impactStop['id']){
-							log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
-						}
-
-						if($trajet['sections'][1]['to']['id'] == $impactStop['id']){
-							log::add('tter','debug', '######## TEST COMPARAISON ID ARRIVAL #######');
-						}
-
-						if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {							
-
-							$delayedDepartureTime = $impactStop['amended_departure_time'];
-							$causeOfDelayed = $impactStop['cause'];
-							log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
-							// compute delay
-							$retard = 
-								( substr($delayedDepartureTime,0,2) * 60 + substr($delayedDepartureTime,2,2) ) 
-								- ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
-							
-							if ($retard == 0) {
-								$retard = 'à l\'heure';
-							} else {
-								$retard = 'retard '.$retard.' min.';
+							if($trajet['sections'][1]['from']['id'] == $impactStop['id']){
+								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
+								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 							}
-							break;
 
-							log::add('tter','debug', 'retard : '.$retard);
-						}
-					}
-					break;
+							if($trajet['sections'][1]['to']['id'] == $impactStop['id']){
+								log::add('tter','debug', '######## TEST COMPARAISON ID ARRIVAL #######');
+								$delayedArrivalTime = self::convertAmenededTimeToTimeString($impactStop['amended_arrival_time']);
+							}
+
+							if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {							
+
+								$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
+								$causeOfDelayed = $impactStop['cause'];
+								log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
+								// compute delay
+								$retard = 
+									( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
+									- ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
+								
+								if ($retard == 0) {
+									$retard = 'à l\'heure';
+								} else {
+									$retard = 'retard '.$retard.' min.';
+								}
+								log::add('tter','debug', 'retard : '.$retard);
+							}
+						}					
 					}
 				}
 			}		
@@ -140,6 +139,10 @@ class SncfApi {
 		$durationToTimeString = $durationInMin.' min';
 	}
 	return $durationToTimeString;	
+  }
+
+  public function convertAmenededTimeToTimeString($amendedTimeToConvert){
+	return substr($amendedTimeToConvert,0,2)."h".substr($amendedTimeToConvert,2,2);;	
   }
 
 }
