@@ -351,6 +351,7 @@ class tter extends eqLogic {
 
 			$heureDepart = $this->getCmd(null, 'heureDepart'.$indexTrajet);
 			$heureArrivee = $this->getCmd(null, 'heureArrivee'.$indexTrajet);
+			$delayedDepartureTime = $this->getCmd(null, 'delayedDepartureTime'.$indexTrajet);
 
 			$dureeTrajet = $this->getCmd(null, 'dureeTrajet'.$indexTrajet);
 			$retard = $this->getCmd(null, 'retard'.$indexTrajet);
@@ -398,7 +399,7 @@ class tter extends eqLogic {
 				$horaires .=
 						'<center>'
 							.'<span class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().' </span>'
-							.'<span class="'.$classForDelayedDepartureTime.'">'.$heureDepart->execCmd().'</span>'
+							.'<span class="'.$classForDelayedDepartureTime.'">'.$delayedDepartureTime->execCmd().'</span>'
 						.'</center>'
 					.'</div>'
 					.'<div class="col-md-4">'
