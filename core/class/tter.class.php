@@ -389,7 +389,7 @@ class tter extends eqLogic {
 			$horaires .= 
 				'<div class="row horaires">'
 					.'<div class="col-md-4 retard">'
-						.'<center class="sticker '.$classForRetard.' '.$popoverforDelayed.'">'
+						.'<center class="sticker '.$classForRetard.'" '.$popoverforDelayed.'>'
 							.'<div>'.$retard->execCmd().'</div>'
 						.'</center>'
 					.'</div>'
