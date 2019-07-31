@@ -406,7 +406,8 @@ class tter extends eqLogic {
 							.'<span class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().' </span>'
 							.'<span class="'.$classForDelayedArrivalTime.'">'.$heureArrivee->execCmd().'</span>'
 						.'</center>'
-					.'</div>';	
+					.'</div>'
+				.'</div>';	
 			}else {
 				$horaires .=
 						'<center class="'.$classForDepartureTime.'">'.$heureDepart->execCmd().'</center>'
