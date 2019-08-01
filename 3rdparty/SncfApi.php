@@ -14,6 +14,7 @@ class SncfApi {
 		log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
 		date_default_timezone_set("Europe/Paris");
 		$currentDateMinusOneHour = self::getcurrentDateMinusOneHour();
+		log::add('tter','debug','currentDateMinusOneHour : '.$currentDateMinusOneHour);
 		$currentDate = date("Ymd\TH:i");
 
 			// construction de la requete vers l'API SNCF
@@ -151,7 +152,10 @@ class SncfApi {
 
   public function getcurrentDateMinusOneHour(){
 	//date("Ymd\TH:i");
-	//$currentTiem = time;
+	$date = new DateTime();
+	$currentTimestamp = $date->getTimestamp();
+	$currentTimestampMinusOneHour = $currentTimestamp - 3600;
+	return date("Ymd\TH:i",$currentDateMinusOneHour);
   }
 
 }
