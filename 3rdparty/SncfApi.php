@@ -15,11 +15,11 @@ class SncfApi {
 		date_default_timezone_set("Europe/Paris");
 		$currentDateMinusOneHour = self::getcurrentDateMinusOneHour();
 		log::add('tter','debug','currentDateMinusOneHour : '.$currentDateMinusOneHour);
-		$currentDate = date("Ymd\TH:i");
+		$currentDate = date("Hi");
 
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
-			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDate.'&datetime_represents=departure&min_nb_journeys='.$nbrTrajet;
+			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDateMinusOneHour.'&datetime_represents=departure&min_nb_journeys='.$nbrTrajet;
 			log::add('tter','debug',$finalQuery);
 
 			// Execution de la requete
@@ -36,17 +36,19 @@ class SncfApi {
 			// Pour chaque 'journeys' du JSON représentant un trajet
 			foreach($responseJSON['journeys'] as $trajet) {
 
-			// récuperation des informations principales du trajet
-			$dateTimeDepart = $trajet['departure_date_time'];
-			$heureDepart = substr($dateTimeDepart,9,4);
-			$dateTimeArrivee = $trajet['arrival_date_time'];
-			$heureArrivee = substr($dateTimeArrivee,9,4);
+			// récuperation des informations principales du trajet			
+			$departureTimeForComputeDelay = substr($trajet['departure_date_time'],9,4);			
+			$arrivalTimeForComputeDelay = substr($trajet['arrival_date_time'],9,4);
+			$departureTime = self::convertDateToTimeString($trajet['departure_date_time']);
+			$arrivalTime = self::convertDateToTimeString($trajet['arrival_date_time']);
 			$numeroTrain = $trajet['sections'][1]['display_informations']['headsign'];
 			$gareDepart = $trajet['sections'][1]['from']['stop_point']['name'];
 			$gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
 
 			log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 
+			$isValidJourney = true;
+			$isNoDisruption = true;
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
 				$retard = 'supprimé';
@@ -70,6 +72,9 @@ class SncfApi {
 								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
 								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 								log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
+								if(substr($impactStop['amended_departure_time'],0,4) <= $currentDate){
+									$isValidJourney = false;
+								}
 							}
 
 							if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
@@ -99,19 +104,21 @@ class SncfApi {
 				}
 			}		
 
-					// store data for current train
-			$trajets[$indexTrajet] = array(
-				'numeroTrain' => $numeroTrain,
-				'gareDepart' => $gareDepart,
-				'gareArrivee' => $gareArrivee,
-				'heureDepart' => self::convertDateToTimeString($trajet['departure_date_time']),
-				'heureArrivee' => self::convertDateToTimeString($trajet['arrival_date_time']),
-				'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
-				'retard' => $retard,
-				'causeOfDelayed' => $causeOfDelayed,
-				'delayedDepartureTime' => $delayedDepartureTime,
-				'delayedArrivalTime' => $delayedArrivalTime,
-			);
+			if($isValidJourney || ($isNoDisruption && self::departureTimeBeforeCurrentTime($departureTime, $currentDate))){
+				// store data for current train
+				$trajets[$indexTrajet] = array(
+					'numeroTrain' => $numeroTrain,
+					'gareDepart' => $gareDepart,
+					'gareArrivee' => $gareArrivee,
+					'heureDepart' => $departureTime,
+					'heureArrivee' => $arrivalTime,
+					'dureeTrajet' => self::convertDurationToTimeString($trajet['duration']),
+					'retard' => $retard,
+					'causeOfDelayed' => $causeOfDelayed,
+					'delayedDepartureTime' => $delayedDepartureTime,
+					'delayedArrivalTime' => $delayedArrivalTime,
+				);
+			}
 		/*	
 		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
       	log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
@@ -155,6 +162,10 @@ class SncfApi {
 	$currentTimestamp = $date->getTimestamp();
 	$currentTimestampMinusOneHour = $currentTimestamp - 3600;
 	return date("Ymd\TH:i",$currentTimestampMinusOneHour);
+  }
+
+  public function departureTimeBeforeCurrentTime($departureTime, $currentDate){
+	return substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate;
   }
 
 }
