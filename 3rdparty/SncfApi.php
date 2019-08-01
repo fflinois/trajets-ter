@@ -13,7 +13,8 @@ class SncfApi {
 	public function getTrajets($apiKey, $depart, $arrivee, $nbrTrajet) {
 		log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
 		date_default_timezone_set("Europe/Paris");
-		$currentDate = date("Ymd\TH:i");
+		$currentDateMinusOneHour = self::getcurrentDateMinusOneHour();
+		$currentYear = substr(date("Ymd\TH:i"),9,2);
 
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
@@ -63,7 +64,9 @@ class SncfApi {
 						// go through each impacted stops
 						foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
 							log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
-
+							
+							log::add('tter','debug', 'id trajet : '.$trajet['sections'][1]['from']['id']);
+							log::add('tter','debug', 'id disruption : '.$impactStop['id']);
 							if($trajet['sections'][1]['from']['id'] == $impactStop['id']){
 								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
 								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
@@ -109,14 +112,15 @@ class SncfApi {
 				'delayedDepartureTime' => $delayedDepartureTime,
 				'delayedArrivalTime' => $delayedArrivalTime,
 			);
-
+		/*	
 		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
       	log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
       	log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
 	  	log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
 	  	log::add('tter','debug','heureArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureArrivee']);
       	log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
-      	log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
+		log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
+		*/
 		$indexTrajet++;
     }
     return $trajets;
@@ -143,6 +147,11 @@ class SncfApi {
 
   public function convertAmenededTimeToTimeString($amendedTimeToConvert){
 	return substr($amendedTimeToConvert,0,2)."h".substr($amendedTimeToConvert,2,2);;	
+  }
+
+  public function getcurrentDateMinusOneHour(){
+	date("Ymd\TH:i");
+	$currentTiem = time;
   }
 
 }

@@ -274,16 +274,16 @@ class tter extends eqLogic {
 
 		log::add('tter','debug','Debut fonction refreshData');
 		$apiKey = config::byKey('apiKey', 'tter', 0);
-		log::add('tter','debug','apiKey : '.$apiKey);		
+		//log::add('tter','debug','apiKey : '.$apiKey);		
 				
 		$depart = $tter->getConfiguration('gareDepart');
-		log::add('tter','debug','gare de depart : '.$depart);
+		//log::add('tter','debug','gare de depart : '.$depart);
 		
 		$arrivee = $tter->getConfiguration('gareArrivee');
-		log::add('tter','debug','gare d arrivee : '.$arrivee);
+		//log::add('tter','debug','gare d arrivee : '.$arrivee);
 		
 		$nbrTrajet = $this->getConfiguration('nbrTrajet');
-		log::add('tter','debug','nombre de trajet(s) : '.$nbrTrajet);
+		//log::add('tter','debug','nombre de trajet(s) : '.$nbrTrajet);
 		
 		// appel de l'API SNCF
 		log::add('tter','debug','Appel API SNCF');
@@ -294,35 +294,35 @@ class tter extends eqLogic {
 		// mise à jour des infos gare départ et arrivée
 		// départ
 		$tter->checkAndUpdateCmd('depart', $trajets[0]['gareDepart']);
-		log::add('tter','debug','set: depart to : '.$trajets[0]['gareDepart']);
+		//log::add('tter','debug','set: depart to : '.$trajets[0]['gareDepart']);
 		// arrivée
 		$tter->checkAndUpdateCmd('arrivee', $trajets[0]['gareArrivee']);
-		log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
+		//log::add('tter','debug','set: arrivee to : '.$trajets[0]['gareArrivee']);
 		
 		for ($indexTrajet = 0; $indexTrajet <= $nbrTrajet - 1; $indexTrajet++){	
 			// MàJ du champ heure de départ
 			$tter->checkAndUpdateCmd('heureDepart'.$indexTrajet, $trajets[$indexTrajet]['heureDepart']);
-			log::add('tter','debug','set: heureDepart to : '.$trajets[$indexTrajet]['heureDepart']);
+			//log::add('tter','debug','set: heureDepart to : '.$trajets[$indexTrajet]['heureDepart']);
 						
 			// MàJ du champ heure d'arrivée
 			$tter->checkAndUpdateCmd('heureArrivee'.$indexTrajet, $trajets[$indexTrajet]['heureArrivee']);
-			log::add('tter','debug','set: heureArrivee to : '.$trajets[$indexTrajet]['heureArrivee']);
+			//log::add('tter','debug','set: heureArrivee to : '.$trajets[$indexTrajet]['heureArrivee']);
 
 			// MàJ du champ heure de départ avec retard
 			$tter->checkAndUpdateCmd('heureDepartRetard'.$indexTrajet, $trajets[$indexTrajet]['delayedDepartureTime']);
-			log::add('tter','debug','set: heureDepartRetard to : '.$trajets[$indexTrajet]['delayedDepartureTime']);
+			//log::add('tter','debug','set: heureDepartRetard to : '.$trajets[$indexTrajet]['delayedDepartureTime']);
 						
 			// MàJ du champ heure d'arrivée avec retard
 			$tter->checkAndUpdateCmd('heureArriveeRetard'.$indexTrajet, $trajets[$indexTrajet]['delayedArrivalTime']);
-			log::add('tter','debug','set: heureArriveeRetard to : '.$trajets[$indexTrajet]['delayedArrivalTime']);
+			//log::add('tter','debug','set: heureArriveeRetard to : '.$trajets[$indexTrajet]['delayedArrivalTime']);
 
 			// MàJ du champ retard
 			$tter->checkAndUpdateCmd('retard'.$indexTrajet, $trajets[$indexTrajet]['retard']);
-			log::add('tter','debug','set: retard to : '.$trajets[$indexTrajet]['retard']);
+			//log::add('tter','debug','set: retard to : '.$trajets[$indexTrajet]['retard']);
 
 			// MàJ du champ dureeTrajet
 			$tter->checkAndUpdateCmd('dureeTrajet'.$indexTrajet, $trajets[$indexTrajet]['dureeTrajet']);
-			log::add('tter','debug','set: dureeTrajet to : '.$trajets[$indexTrajet]['dureeTrajet']);
+			//log::add('tter','debug','set: dureeTrajet to : '.$trajets[$indexTrajet]['dureeTrajet']);
 		}
 	}
 
