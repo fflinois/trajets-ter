@@ -111,9 +111,9 @@ class SncfApi {
 					$isValidJourney = true;
 				}
 			}		
-			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.self::departureTimeBeforeCurrentTime($departureTime, $currentDate));
+			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.$departureTimeBeforeCurrentTime);
 
-			if(($isValidJourney){
+			if($isValidJourney){
 				// store data for current train
 				$trajets[$indexTrajet] = array(
 					'numeroTrain' => $numeroTrain,
