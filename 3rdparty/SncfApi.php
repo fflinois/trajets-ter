@@ -154,7 +154,7 @@ class SncfApi {
 	$date = new DateTime();
 	$currentTimestamp = $date->getTimestamp();
 	$currentTimestampMinusOneHour = $currentTimestamp - 3600;
-	return date("Ymd\TH:i",$currentDateMinusOneHour);
+	return date("Ymd\TH:i",$currentTimestampMinusOneHour);
   }
 
 }
