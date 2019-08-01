@@ -47,7 +47,7 @@ class SncfApi {
 
 			log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 			
-			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate));	
+			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate);	
 			$isValidJourney = false;
 			$isDisruption = false;
 			// si le train est indisponible 
