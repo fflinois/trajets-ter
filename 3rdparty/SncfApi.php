@@ -59,7 +59,7 @@ class SncfApi {
 			}else{
 				// sinon recherche des retards éventuels
 				$retard = 'à l\'heure';
-				$updatedTime = $heureDepart;
+				$updatedTime = $departureTimeForComputeDelay;
 				$numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
 				log::add('tter','debug','Disruption ID '.$numdisrup);
 
@@ -67,7 +67,7 @@ class SncfApi {
 				foreach($disruptions as $disruption) {
 					if ( $disruption['disruption_id']== $numdisrup ) {
 						log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
-						log::add('tter','debug','Search for impacted departure '.$heureDepart);
+						log::add('tter','debug','Search for impacted departure '.$departureTimeForComputeDelay);
 						// go through each impacted stops
 						foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
 							log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
@@ -88,14 +88,14 @@ class SncfApi {
 								log::add('tter','debug', 'amended arrival time : '.$delayedArrivalTime);
 							}
 
-							if ( substr($impactStop['base_departure_time'],0,4) == $heureDepart ) {						
+							if ( substr($impactStop['base_departure_time'],0,4) == $departureTimeForComputeDelay ) {						
 
 								$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
 								$causeOfDelayed = $impactStop['cause'];
 								// compute delay
 								$retard = 
 									( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
-									- ( substr($heureDepart,0,2) * 60 + substr($heureDepart,2,2) );
+									- ( substr($departureTimeForComputeDelay,0,2) * 60 + substr($departureTimeForComputeDelay,2,2) );
 								
 								if ($retard == 0) {
 									$retard = 'à l\'heure';
