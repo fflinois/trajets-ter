@@ -66,13 +66,13 @@ class SncfApi {
 							log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
 							
 							log::add('tter','debug', 'id trajet : '.$trajet['sections'][1]['from']['id']);
-							log::add('tter','debug', 'id disruption : '.$impactStop['id']);
-							if($trajet['sections'][1]['from']['id'] == $impactStop['id']){
+							log::add('tter','debug', 'id disruption : '.$impactStop['stop_point']['id']);
+							if($trajet['sections'][1]['from']['id'] == $impactStop['stop_point']['id']){
 								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
 								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 							}
 
-							if($trajet['sections'][1]['to']['id'] == $impactStop['id']){
+							if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
 								log::add('tter','debug', '######## TEST COMPARAISON ID ARRIVAL #######');
 								$delayedArrivalTime = self::convertAmenededTimeToTimeString($impactStop['amended_arrival_time']);
 							}
