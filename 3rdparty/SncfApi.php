@@ -19,7 +19,7 @@ class SncfApi {
 
 			// construction de la requete vers l'API SNCF
 			$baseQuery = 'https://'.$apiKey.'@api.sncf.com/v1/coverage/sncf/journeys?';
-			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDateMinusOneHour.'&datetime_represents=departure&min_nb_journeys='.$nbrTrajet;
+			$finalQuery = $baseQuery.'from='.$depart.'&to='.$arrivee.'&datetime='.$currentDateMinusOneHour.'&datetime_represents=departure&min_nb_journeys='.$nbrTrajet*2;
 			log::add('tter','debug',$finalQuery);
 
 			// Execution de la requete
@@ -46,12 +46,16 @@ class SncfApi {
 			$gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
 
 			log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
-
-			$isValidJourney = true;
-			$isNoDisruption = true;
+			
+			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate));	
+			$isValidJourney = false;
+			$isDisruption = false;
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
 				$retard = 'supprimé';
+				if(!$departureTimeBeforeCurrentTime){
+					$isValidJourney = true;
+				}
 			}else{
 				// sinon recherche des retards éventuels
 				$retard = 'à l\'heure';
@@ -72,9 +76,10 @@ class SncfApi {
 								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
 								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 								log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
-								if(substr($impactStop['amended_departure_time'],0,4) <= $currentDate){
-									$isValidJourney = false;
+								if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
+									$isValidJourney = true;
 								}
+								$disruption = true;
 							}
 
 							if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
@@ -102,9 +107,13 @@ class SncfApi {
 						}					
 					}
 				}
+				if(!$isDisruption && !$isValidJourney && !$departureTimeBeforeCurrentTime){
+					$isValidJourney = true;
+				}
 			}		
+			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.self::departureTimeBeforeCurrentTime($departureTime, $currentDate));
 
-			if($isValidJourney || ($isNoDisruption && self::departureTimeBeforeCurrentTime($departureTime, $currentDate))){
+			if(($isValidJourney){
 				// store data for current train
 				$trajets[$indexTrajet] = array(
 					'numeroTrain' => $numeroTrain,
