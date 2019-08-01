@@ -79,7 +79,7 @@ class SncfApi {
 								if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
 									$isValidJourney = true;
 								}
-								$disruption = true;
+								$isDisruption = true;
 							}
 
 							if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
