@@ -405,7 +405,7 @@ class tter extends eqLogic {
 					.'<div class="col-md-4">'
 						.'<center>'
 							.'<span class="'.$classForArrivalTime.'">'.$heureArrivee->execCmd().' </span>'
-							.'<span class="'.$classForDelayedArrivalTime.'">'.$heureArrivee->execCmd().'</span>'
+							.'<span class="'.$classForDelayedArrivalTime.'">'.$delayedArrivalTime->execCmd().'</span>'
 						.'</center>'
 					.'</div>'
 				.'</div>';	
