@@ -15,11 +15,11 @@
     padding: 0px !important;
 }
 
-.horaires:nth-child(even){
+.horaires:nth-child(odd){
     background-color:#5993ffb6 ;
 }
 
-.horaires:nth-child(odd), .gares{
+.horaires:nth-child(even), .gares{
     background-color: #3b3bff94;
 }
 
