@@ -47,13 +47,13 @@ class SncfApi {
 			//log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 			
 			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate);	
-			$isValidJourney = false;
-			$isDisruption = false;
+			$isValidJourney = FALSE;
+			$isDisruption = FALSE;
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
 				$retard = 'supprimé';
 				if(!$departureTimeBeforeCurrentTime){
-					$isValidJourney = true;
+					$isValidJourney = TRUE;
 				}
 			}else{
 				// sinon recherche des retards éventuels
@@ -76,10 +76,10 @@ class SncfApi {
 									$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 									log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
 									if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
-										$isValidJourney = true;
+										$isValidJourney = TRUE;
 										log::add('tter','debug', 'Trajet valide OK : '.$isValidJourney);
 									}
-									$isDisruption = true;
+									$isDisruption = TRUE;
 								}
 
 								if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
@@ -109,7 +109,7 @@ class SncfApi {
 					}
 				}
 				if(!$isDisruption && !$isValidJourney && !$departureTimeBeforeCurrentTime){
-					$isValidJourney = true;
+					$isValidJourney = TRUE;
 				}
 			}		
 			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.$departureTimeBeforeCurrentTime);
