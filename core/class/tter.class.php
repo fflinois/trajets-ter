@@ -324,6 +324,8 @@ class tter extends eqLogic {
 			$tter->checkAndUpdateCmd('dureeTrajet'.$indexTrajet, $trajets[$indexTrajet]['dureeTrajet']);
 			//log::add('tter','debug','set: dureeTrajet to : '.$trajets[$indexTrajet]['dureeTrajet']);
 		}
+
+		$tter->refreshWidget();
 	}
 
 
