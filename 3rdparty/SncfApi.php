@@ -13,8 +13,7 @@ class SncfApi {
 	public function getTrajets($apiKey, $depart, $arrivee, $nbrTrajet) {
 		log::add('tter','debug','calling sncf api with :'.$apiKey.' / '.$depart.' / '.$arrivee);
 		date_default_timezone_set("Europe/Paris");
-		$currentDateMinusOneHour = self::getcurrentDateMinusOneHour();
-		log::add('tter','debug','currentDateMinusOneHour : '.$currentDateMinusOneHour);
+		$currentDateMinusOneHour = self::getcurrentDateMinusOneHour();		
 		$currentDate = date("Hi");
 
 			// construction de la requete vers l'API SNCF
@@ -45,7 +44,7 @@ class SncfApi {
 			$gareDepart = $trajet['sections'][1]['from']['stop_point']['name'];
 			$gareArrivee = $trajet['sections'][1]['to']['stop_point']['name'];
 
-			log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
+			//log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 			
 			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate);	
 			$isValidJourney = false;
@@ -61,50 +60,52 @@ class SncfApi {
 				$retard = 'à l\'heure';
 				$updatedTime = $departureTimeForComputeDelay;
 				$numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
-				log::add('tter','debug','Disruption ID '.$numdisrup);
-
-				$disruptions = $responseJSON['disruptions'];
-				foreach($disruptions as $disruption) {
-					if ( $disruption['disruption_id']== $numdisrup ) {
-						log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
-						log::add('tter','debug','Search for impacted departure '.$departureTimeForComputeDelay);
-						// go through each impacted stops
-						foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
-							log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
-														
-							if($trajet['sections'][1]['from']['id'] == $impactStop['stop_point']['id']){
-								log::add('tter','debug', '######## TEST COMPARAISON ID DEPARTURE #######');
-								$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
-								log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
-								if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
-									$isValidJourney = true;
+				//log::add('tter','debug','Disruption ID '.$numdisrup);
+				if($numdisrup != null || $numdisrup != '' ||$numdisrup != ' '){
+					$disruptions = $responseJSON['disruptions'];
+					foreach($disruptions as $disruption) {
+						if ( $disruption['disruption_id']== $numdisrup ) {
+							//log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
+							//log::add('tter','debug','Search for impacted departure '.$departureTimeForComputeDelay);
+							// go through each impacted stops
+							foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
+								//log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
+															
+								if($trajet['sections'][1]['from']['id'] == $impactStop['stop_point']['id']){
+									log::add('tter','debug', '######## DISRUPTION DEPARTURE FOUND #######');
+									$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
+									log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
+									if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
+										$isValidJourney = true;
+										log::add('tter','debug', 'Trajet valide OK : '.$isValidJourney);
+									}
+									$isDisruption = true;
 								}
-								$isDisruption = true;
-							}
 
-							if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
-								log::add('tter','debug', '######## TEST COMPARAISON ID ARRIVAL #######');
-								$delayedArrivalTime = self::convertAmenededTimeToTimeString($impactStop['amended_arrival_time']);
-								log::add('tter','debug', 'amended arrival time : '.$delayedArrivalTime);
-							}
-
-							if ( substr($impactStop['base_departure_time'],0,4) == $departureTimeForComputeDelay ) {						
-
-								$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
-								$causeOfDelayed = $impactStop['cause'];
-								// compute delay
-								$retard = 
-									( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
-									- ( substr($departureTimeForComputeDelay,0,2) * 60 + substr($departureTimeForComputeDelay,2,2) );
-								
-								if ($retard == 0) {
-									$retard = 'à l\'heure';
-								} else {
-									$retard = 'retard '.$retard.' min.';
+								if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
+									//log::add('tter','debug', '######## DISRUPTION ARRIVAL FOUND #######');
+									$delayedArrivalTime = self::convertAmenededTimeToTimeString($impactStop['amended_arrival_time']);
+									//log::add('tter','debug', 'amended arrival time : '.$delayedArrivalTime);
 								}
-								log::add('tter','debug', 'retard : '.$retard);
-							}
-						}					
+
+								if ( substr($impactStop['base_departure_time'],0,4) == $departureTimeForComputeDelay ) {						
+
+									$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
+									$causeOfDelayed = $impactStop['cause'];
+									// compute delay
+									$retard = 
+										( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
+										- ( substr($departureTimeForComputeDelay,0,2) * 60 + substr($departureTimeForComputeDelay,2,2) );
+									
+									if ($retard == 0) {
+										$retard = 'à l\'heure';
+									} else {
+										$retard = 'retard '.$retard.' min.';
+									}
+									//log::add('tter','debug', 'retard : '.$retard);
+								}
+							}					
+						}
 					}
 				}
 				if(!$isDisruption && !$isValidJourney && !$departureTimeBeforeCurrentTime){
