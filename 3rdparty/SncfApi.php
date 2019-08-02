@@ -47,13 +47,13 @@ class SncfApi {
 			//log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 			
 			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate);	
-			$isValidJourney = 'FALSE';
-			$isDisruption = 'FALSE';
+			$isValidJourney = FALSE;
+			$isDisruption = FALSE;
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
 				$retard = 'supprimé';
-				if($departureTimeBeforeCurrentTime == 'FALSE'){
-					$isValidJourney = 'TRUE';
+				if($departureTimeBeforeCurrentTime == FALSE){
+					$isValidJourney = TRUE;
 				}
 			}else{
 				// sinon recherche des retards éventuels
@@ -76,10 +76,10 @@ class SncfApi {
 									$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 									log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
 									if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
-										$isValidJourney = 'TRUE';
+										$isValidJourney = TRUE;
 										log::add('tter','debug', 'Trajet valide OK : '.$isValidJourney);
 									}
-									$isDisruption = 'TRUE';
+									$isDisruption = TRUE;
 								}
 
 								if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
@@ -108,13 +108,13 @@ class SncfApi {
 						}
 					}
 				}
-				if($isDisruption == 'FALSE' && $isValidJourney == 'FALSE' && $departureTimeBeforeCurrentTime == 'FALSE'){
-					$isValidJourney = 'TRUE';
+				if($isDisruption == FALSE && $isValidJourney == FALSE && $departureTimeBeforeCurrentTime == FALSE){
+					$isValidJourney = TRUE;
 				}
 			}		
 			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.$departureTimeBeforeCurrentTime);
 
-			if($isValidJourney == 'TRUE'){
+			if($isValidJourney == TRUE){
 				// store data for current train
 				$trajets[$indexTrajet] = array(
 					'numeroTrain' => $numeroTrain,
@@ -128,6 +128,7 @@ class SncfApi {
 					'delayedDepartureTime' => $delayedDepartureTime,
 					'delayedArrivalTime' => $delayedArrivalTime,
 				);
+				$indexTrajet++;
 			}
 		/*	
 		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
@@ -138,7 +139,7 @@ class SncfApi {
       	log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
 		log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
 		*/
-		$indexTrajet++;
+		
     }
     return $trajets;
   }
@@ -175,10 +176,7 @@ class SncfApi {
   }
 
   public function departureTimeBeforeCurrentTime($departureTime, $currentDate){
-	if(substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate){
-		return 'TRUE';
-	}
-	return 'FALSE';
+	return substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate;
   }
 
 }
