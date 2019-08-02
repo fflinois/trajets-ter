@@ -368,13 +368,13 @@ class tter extends eqLogic {
 
 			if($retard->execCmd() == 'à l\'heure'){
 				log::add('tter','debug','train onTime');
-				$classForDepartureTime .= 'whiteText';
-				$classForArrivalTime .= 'whiteText';
+				$classForDepartureTime .= 'whiteBoldText';
+				$classForArrivalTime .= 'whiteBoldText';
 				$classForRetard = 'onTime';
 			}elseif($retard->execCmd() == 'supprimé'){
 				log::add('tter','debug','train deleted');
-				$classForDepartureTime .= 'whiteText deletedText';
-				$classForArrivalTime .= 'whiteText deletedText';
+				$classForDepartureTime .= 'redBoldText deletedText';
+				$classForArrivalTime .= 'redBoldText deletedText';
 				$classForRetard = 'deleted';
 				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train supprimé"';
 			}else{
@@ -382,8 +382,8 @@ class tter extends eqLogic {
 				$isDelayed = true;
 				$classForDepartureTime .= 'whiteText deletedText';
 				$classForArrivalTime .= 'whiteText deletedText';
-				$classForDelayedDepartureTime .= 'redText';
-				$classForDelayedArrivalTime .= 'redText';
+				$classForDelayedDepartureTime .= 'yellowBoldText';
+				$classForDelayedArrivalTime .= 'yellowBoldText';
 				$classForRetard = 'delayed';
 				$popoverforDelayed = 'data-toggle="popover" title="Popover title" data-content="Detail train retardé"';
 			}

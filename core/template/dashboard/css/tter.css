@@ -37,6 +37,11 @@
     font-weight: bold;
 }
 
+.redBoldText{
+    color: #b30000;
+    font-weight: bold;
+}
+
 .deletedText{
     text-decoration: line-through;
 }
