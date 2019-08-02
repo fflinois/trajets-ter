@@ -52,7 +52,7 @@ class SncfApi {
 			// si le train est indisponible 
 			if ($trajet['status'] == 'NO_SERVICE'){
 				$retard = 'supprimé';
-				if(!$departureTimeBeforeCurrentTime){
+				if($departureTimeBeforeCurrentTime == FALSE){
 					$isValidJourney = TRUE;
 				}
 			}else{
@@ -108,13 +108,13 @@ class SncfApi {
 						}
 					}
 				}
-				if(!$isDisruption && !$isValidJourney && !$departureTimeBeforeCurrentTime){
+				if($isDisruption == FALSE && $isValidJourney == FALSE && $departureTimeBeforeCurrentTime == FALSE){
 					$isValidJourney = TRUE;
 				}
 			}		
 			log::add('tter','debug', 'valid journey: '.$isValidJourney.' no diruption : '.$isNoDisruption.' before : '.$departureTimeBeforeCurrentTime);
 
-			if($isValidJourney){
+			if($isValidJourney == TRUE){
 				// store data for current train
 				$trajets[$indexTrajet] = array(
 					'numeroTrain' => $numeroTrain,
