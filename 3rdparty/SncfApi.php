@@ -175,7 +175,10 @@ class SncfApi {
   }
 
   public function departureTimeBeforeCurrentTime($departureTime, $currentDate){
-	return substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate;
+	if(substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate){
+		return 'TRUE';
+	}
+	return 'FALSE';
   }
 
 }
