@@ -23,11 +23,11 @@ class SncfApi {
 
 			// Execution de la requete
 			$response = file_get_contents($finalQuery);
-			log::add('tter','debug','API response :'.$response);
+			//log::add('tter','debug','API response :'.$response);
 
 			// Decodage de la response en JSON
 			$responseJSON = json_decode($response, true);
-			log::add('tter','debug','API response json :'.$responseJSON);
+			//log::add('tter','debug','API response json :'.$responseJSON);
 
 			$trajets = [];
 			$indexTrajet = 0;
@@ -46,7 +46,7 @@ class SncfApi {
 
 			//log::add('tter','debug','Found train '.$numeroTrain.' :'.$dateTimeDepart.' / '.$dateTimeArrivee.' - '.$gareDepart.' > '.$gareArrivee);
 			
-			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($departureTime, $currentDate);	
+			$departureTimeBeforeCurrentTime = self::departureTimeBeforeCurrentTime($trajet['departure_date_time']);	
 			$isValidJourney = FALSE;
 			$isDisruption = FALSE;
 			// si le train est indisponible 
@@ -59,50 +59,47 @@ class SncfApi {
 				// sinon recherche des retards éventuels
 				$retard = 'à l\'heure';
 				$updatedTime = $departureTimeForComputeDelay;
+				// récupération de l'ID de disruption du trajet (id du retard)
 				$numdisrup = $trajet['sections'][1]['display_informations']['links'][0]['id'];
-				//log::add('tter','debug','Disruption ID '.$numdisrup);
+
+				// Si un ID de disruption est présent on va rechercher celui ci dans l'objet disruptions
 				if($numdisrup != null || $numdisrup != '' ||$numdisrup != ' '){
 					$disruptions = $responseJSON['disruptions'];
+
 					foreach($disruptions as $disruption) {
-						if ( $disruption['disruption_id']== $numdisrup ) {
-							//log::add('tter','debug','Disruption ID '.$numdisrup. ' has been found!');
-							//log::add('tter','debug','Search for impacted departure '.$departureTimeForComputeDelay);
-							// go through each impacted stops
+						// si c'est la disruption de notre trajet 
+						if ( $disruption['disruption_id'] == $numdisrup ) {
+							
+							// on parcours chaque arrêt impacté de la disruption pour trouver nos arrêt concerné
 							foreach($disruption['impacted_objects'][0]['impacted_stops'] as $impactStop) {
-								//log::add('tter','debug','testing departure '.substr($impactStop['base_departure_time'],0,4));
-															
+								
+								// si l'id de l'arret observé correspond à l'id de la gare de départ
 								if($trajet['sections'][1]['from']['id'] == $impactStop['stop_point']['id']){
-									log::add('tter','debug', '######## DISRUPTION DEPARTURE FOUND #######');
+
 									$delayedDepartureTime = self::convertAmenededTimeToTimeString($impactStop['amended_departure_time']);
 									log::add('tter','debug', 'amended departure time : '.$delayedDepartureTime);
+									
 									if(substr($impactStop['amended_departure_time'],0,4) >= $currentDate){
 										$isValidJourney = TRUE;
-										log::add('tter','debug', 'Trajet valide OK : '.$isValidJourney);
+										$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
+										$causeOfDelayed = $impactStop['cause'];
+										// calcul du retard
+										$retard = 
+											( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
+											- ( substr($departureTimeForComputeDelay,0,2) * 60 + substr($departureTimeForComputeDelay,2,2) );
+									
+										if ($retard == 0) {
+											$retard = 'à l\'heure';
+										} else {
+											$retard = 'retard '.$retard.' min.';
+										}
 									}
 									$isDisruption = TRUE;
 								}
 
+								// si l'id de l'arret observé correspond à l'id de la gare d'arrivée
 								if($trajet['sections'][1]['to']['id'] == $impactStop['stop_point']['id']){
-									//log::add('tter','debug', '######## DISRUPTION ARRIVAL FOUND #######');
 									$delayedArrivalTime = self::convertAmenededTimeToTimeString($impactStop['amended_arrival_time']);
-									//log::add('tter','debug', 'amended arrival time : '.$delayedArrivalTime);
-								}
-
-								if ( substr($impactStop['base_departure_time'],0,4) == $departureTimeForComputeDelay ) {						
-
-									$delayedDepartureTimeForComputeDelay = $impactStop['amended_departure_time'];
-									$causeOfDelayed = $impactStop['cause'];
-									// compute delay
-									$retard = 
-										( substr($delayedDepartureTimeForComputeDelay,0,2) * 60 + substr($delayedDepartureTimeForComputeDelay,2,2) ) 
-										- ( substr($departureTimeForComputeDelay,0,2) * 60 + substr($departureTimeForComputeDelay,2,2) );
-									
-									if ($retard == 0) {
-										$retard = 'à l\'heure';
-									} else {
-										$retard = 'retard '.$retard.' min.';
-									}
-									//log::add('tter','debug', 'retard : '.$retard);
 								}
 							}					
 						}
@@ -129,16 +126,7 @@ class SncfApi {
 					'delayedArrivalTime' => $delayedArrivalTime,
 				);
 				$indexTrajet++;
-			}
-		/*	
-		log::add('tter','debug','trajet '.$indexTrajet.' : '.$trajets[$indexTrajet]);
-      	log::add('tter','debug','gareDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareDepart']);
-      	log::add('tter','debug','gareArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['gareArrivee']);
-	  	log::add('tter','debug','heureDepart'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureDepart']);
-	  	log::add('tter','debug','heureArrivee'.$indexTrajet.' : '.$trajets[$indexTrajet]['heureArrivee']);
-      	log::add('tter','debug','retard'.$indexTrajet.' : '.$trajets[$indexTrajet]['retard']);
-		log::add('tter','debug','dureeTrajet'.$indexTrajet.' : '.$trajets[$indexTrajet]['dureeTrajet']);
-		*/
+			}	
 		
     }
     return $trajets;
@@ -168,15 +156,19 @@ class SncfApi {
   }
 
   public function getcurrentDateMinusOneHour(){
-	//date("Ymd\TH:i");
 	$date = new DateTime();
 	$currentTimestamp = $date->getTimestamp();
 	$currentTimestampMinusOneHour = $currentTimestamp - 3600;
 	return date("Ymd\TH:i",$currentTimestampMinusOneHour);
   }
 
-  public function departureTimeBeforeCurrentTime($departureTime, $currentDate){
-	return substr($departureTime,0,2).substr($departureTime,3,2) < $currentDate;
+  public function departureTimeBeforeCurrentTime($departureTime){
+	$date = new DateTime();
+	$currentTimestamp = $date->getTimestamp();
+	$date->setDate(substr($departureTime,0,4),substr($departureTime,4,2),substr($departureTime,6,2));
+	$date->setTime(substr($departureTime,9,2),substr($departureTime,11,2),substr($departureTime,13,2));
+	$departureTimestamp = $date->getTimestamp();
+	return $departureTimestamp < $currentTimestamp;
   }
 
 }
